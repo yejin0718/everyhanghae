@@ -12,8 +12,8 @@ const Router = () => {
         <Routes>
           <Route path="/" element={<Main />} />
         </Routes>
-        <Footer />
       </Layout>
+      <Footer />
     </BrowserRouter>
   );
 };
