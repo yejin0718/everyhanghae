@@ -1,19 +1,21 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Header from "./layout/Header";
+import Layout from "./layout/Layout";
+import Footer from "./layout/Footer";
 import Main from "../pages/Main";
-import Layout from "../components/layout/Layout";
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
+import Write from "../pages/Write";
 
 const Router = () => {
   return (
     <BrowserRouter>
+      <Header />
       <Layout>
-        <Header />
         <Routes>
           <Route path="/" element={<Main />} />
+          <Route path="/write" element={<Write />} />
         </Routes>
-        <Footer />
       </Layout>
+      <Footer />
     </BrowserRouter>
   );
 };
