@@ -3,6 +3,7 @@ import Header from "./layout/Header";
 import Layout from "./layout/Layout";
 import Footer from "./layout/Footer";
 import Main from "../pages/Main";
+import Write from "../pages/Write";
 
 const Router = () => {
   return (
@@ -11,6 +12,7 @@ const Router = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Main />} />
+          <Route path="/write" element={<Write />} />
         </Routes>
       </Layout>
       <Footer />
