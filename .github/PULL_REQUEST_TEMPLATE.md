@@ -5,15 +5,15 @@ PR이 다음 사항을 만족하는지 확인해주세요.
 체크하려면 괄호 안에 "x"를 입력하세요. 
 각 규칙은 Convention 문서에 있습니다.
 PR 제목에 쓰는 prefix는 다음과 같습니다.
-��� Release
-��� Fix
+🚀 Release
+🐛 Fix
 ✨ Feat
-��� Doc
+📝 Doc
 ♻️ Refactor
-��� Chore
+🔧 Chore
 ⏪️ Revert
-��� Test
-��� Init
+🧪 Test
+🎉 Init
 -->
 
 - [ ] 커밋 제목 규칙
@@ -44,3 +44,8 @@ PR 제목에 쓰는 prefix는 다음과 같습니다.
 
 ## 변경로직
 - 내용을 적어주세요.
+
+
+## 연결 이슈 close
+<!-- `close #이슈 번호`를 통해 PR 머지와 함께 이슈를 close 할 수 있습니다. -->
+close 
