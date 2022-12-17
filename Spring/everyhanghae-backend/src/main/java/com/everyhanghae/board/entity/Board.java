@@ -39,7 +39,7 @@ public class Board extends Timestamped {
 	private String content;
 
 	@Enumerated(EnumType.STRING)
-	@Column(nullable = false)
+	@Column
 	private BoardCategory category;
 
 	@Column(nullable = false, columnDefinition = "int default 0")
