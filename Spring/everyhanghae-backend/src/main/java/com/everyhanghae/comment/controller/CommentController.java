@@ -1,7 +1,7 @@
 package com.everyhanghae.comment.controller;
 
-import com.everyhanghae.comment.dto.CommentRequestDto;
-import com.everyhanghae.comment.dto.CommentResponseDto;
+import com.everyhanghae.comment.dto.RequestComment;
+import com.everyhanghae.comment.dto.ResponseComment;
 import com.everyhanghae.comment.service.CommentService;
 import com.everyhanghae.common.response.DataResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,15 +18,15 @@ public class CommentController {
 
     //댓글 작성
     @PostMapping
-    public DataResponse<CommentResponseDto> writeComment(@PathVariable Long boardId, @RequestBody CommentRequestDto requestDto) {
-        CommentResponseDto commentResponseDto = commentService.createComment(boardId, requestDto);
+    public DataResponse<ResponseComment> writeComment(@PathVariable Long boardId, @RequestBody RequestComment requestDto) {
+        ResponseComment commentResponseDto = commentService.createComment(boardId, requestDto);
         return new DataResponse<>(CREATE_COMMENT_SUCCESS_MSG, commentResponseDto);
     }
 
     //댓글 수정
     @PutMapping("/{commentId}")
-    public DataResponse<CommentResponseDto> editComment(@PathVariable Long boardId, @PathVariable Long commentId, @RequestBody CommentRequestDto requestDto){
-        CommentResponseDto commentResponseDto = commentService.editComment(boardId, commentId, requestDto);
+    public DataResponse<ResponseComment> editComment(@PathVariable Long boardId, @PathVariable Long commentId, @RequestBody RequestComment requestDto){
+        ResponseComment commentResponseDto = commentService.editComment(boardId, commentId, requestDto);
         return new DataResponse<>(UPDATE_COMMENT_SUCCESS_MSG, commentResponseDto);
     }
 
