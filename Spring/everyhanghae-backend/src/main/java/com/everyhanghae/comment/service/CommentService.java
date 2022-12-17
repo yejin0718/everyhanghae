@@ -2,8 +2,8 @@ package com.everyhanghae.comment.service;
 
 import com.everyhanghae.board.entity.Board;
 import com.everyhanghae.board.repository.BoardRepository;
-import com.everyhanghae.comment.dto.CommentRequestDto;
-import com.everyhanghae.comment.dto.CommentResponseDto;
+import com.everyhanghae.comment.dto.RequestComment;
+import com.everyhanghae.comment.dto.ResponseComment;
 import com.everyhanghae.comment.entity.Comment;
 import com.everyhanghae.comment.mapper.CommentMapper;
 import com.everyhanghae.comment.repository.CommentRepository;
@@ -24,7 +24,7 @@ public class CommentService {
 
     //댓글 작성
     @Transactional
-    public CommentResponseDto createComment(Long id, CommentRequestDto requestDto) {
+    public ResponseComment createComment(Long id, RequestComment requestDto) {
         //유저 확인(추가 예정)
 
         //board있는지 확인
@@ -34,10 +34,10 @@ public class CommentService {
         Comment comment = commentMapper.toDepthZeroComment(board, requestDto);
         commentRepository.save(comment);
 
-        return new CommentResponseDto(id, comment);
+        return new ResponseComment(id, comment);
     }
 
-    public CommentResponseDto editComment(Long boardId, Long commentId, CommentRequestDto requestDto) {
+    public ResponseComment editComment(Long boardId, Long commentId, RequestComment requestDto) {
 
         //수정한 댓글 변수에 담기
         String editComment = requestDto.getComment();
@@ -51,7 +51,7 @@ public class CommentService {
         Comment comment = checkComment(commentId);
         comment.update(editComment);
 
-        return new CommentResponseDto(boardId, comment);
+        return new ResponseComment(boardId, comment);
     }
 
 
