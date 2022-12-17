@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum ExceptionMessage {
 
     //comment
-    NO_EXIST_BOARD_EXCEPTION_MSG(404, "게시글이 존재하지 않습니다.");
+    NO_EXIST_BOARD_EXCEPTION_MSG(404, "게시글이 존재하지 않습니다."),
+    NO_EXIST_COMMENT_EXCEPTION_MSG(404, "댓글이 존재하지 않습니다.");
 
     private final int status;
     private final String msg;
