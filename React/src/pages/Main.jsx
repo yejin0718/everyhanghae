@@ -7,8 +7,8 @@ const Main = () => {
   return (
     <div>
       <div className={classes.mainTop}>
-        <div className={classes.mainTopNumber}>항해99 기수</div>
-        <Button className={classes.mainTopButton}>글쓰기</Button>
+        <div>항해99 기수</div>
+        <Button>글쓰기</Button>
       </div>
       <>
         <div className={classes.mainMidMarquee}>
