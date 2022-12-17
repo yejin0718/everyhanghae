@@ -2,6 +2,8 @@ package com.everyhanghae.comment.entity;
 
 import com.everyhanghae.board.entity.Board;
 import com.everyhanghae.common.Timestamped;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.Column;
@@ -11,9 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+@Getter
 @Entity
 @NoArgsConstructor
-@Getter
+@AllArgsConstructor
+@Builder
 public class Comment extends Timestamped {
 
     @Id
