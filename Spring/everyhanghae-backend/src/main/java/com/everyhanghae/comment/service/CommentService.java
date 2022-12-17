@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_BOARD_EXCEPTION_MSG;
+
 @RequiredArgsConstructor
 @Service
 public class CommentService {
@@ -31,13 +33,13 @@ public class CommentService {
         Comment comment = commentMapper.toDepthZeroComment(board, requestDto);
         commentRepository.save(comment);
 
-        return commentMapper.toResponseComment(id, comment);
+        return new CommentResponseDto(id, comment);
     }
 
     //board확인
     private Board checkBoard(Long id){
         return boardRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("존재하지 않는 게시물입니다.")//수정 해야됨
+                () -> new IllegalArgumentException(NO_EXIST_BOARD_EXCEPTION_MSG.getMsg())
         );
     }
 

@@ -15,14 +15,14 @@ import static com.everyhanghae.common.response.ResponseMessage.CREATE_COMMENT_SU
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/board/{id}/comment")
+@RequestMapping("/api/boards/{boardId}/comment")
 public class CommentController {
     private final CommentService commentService;
 
     //댓글 작성
     @PostMapping
-    public DataResponse<CommentResponseDto> writeComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
-        CommentResponseDto commentResponseDto = commentService.createComment(id, requestDto);
+    public DataResponse<CommentResponseDto> writeComment(@PathVariable Long boardId, @RequestBody CommentRequestDto requestDto) {
+        CommentResponseDto commentResponseDto = commentService.createComment(boardId, requestDto);
         return new DataResponse<>(CREATE_COMMENT_SUCCESS_MSG, commentResponseDto);
     }
 
