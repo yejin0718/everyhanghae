@@ -91,7 +91,7 @@ const SignIn = () => {
         </form>
 
         <div className={classes.caption}>
-          <Link className={classes.link} to="/signup">
+          <Link className={classes.link} to="/register">
             아직 회원이 아니신가요?
           </Link>
         </div>
