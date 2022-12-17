@@ -32,6 +32,10 @@ const GlovalStyle = createGlobalStyle`
   outline: none;
   font-family: "Pretendard";
 }
+
+body {
+  height: 100%;
+}
 `;
 
 export default GlovalStyle;

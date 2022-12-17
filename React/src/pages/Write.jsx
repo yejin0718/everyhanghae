@@ -1,7 +1,12 @@
 import React from "react";
+import AddWrite from "../components/write/AddWrite";
 
 const Write = () => {
-  return <div>Write</div>;
+  return (
+    <>
+      <AddWrite />
+    </>
+  );
 };
 
 export default Write;
