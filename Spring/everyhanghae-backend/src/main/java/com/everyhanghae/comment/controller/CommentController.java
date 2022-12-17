@@ -4,11 +4,11 @@ import com.everyhanghae.comment.dto.RequestComment;
 import com.everyhanghae.comment.dto.ResponseComment;
 import com.everyhanghae.comment.service.CommentService;
 import com.everyhanghae.common.response.DataResponse;
+import com.everyhanghae.common.response.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import static com.everyhanghae.common.response.ResponseMessage.CREATE_COMMENT_SUCCESS_MSG;
-import static com.everyhanghae.common.response.ResponseMessage.UPDATE_COMMENT_SUCCESS_MSG;
+import static com.everyhanghae.common.response.ResponseMessage.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,6 +28,13 @@ public class CommentController {
     public DataResponse<ResponseComment> editComment(@PathVariable Long boardId, @PathVariable Long commentId, @RequestBody RequestComment requestDto){
         ResponseComment commentResponseDto = commentService.editComment(boardId, commentId, requestDto);
         return new DataResponse<>(UPDATE_COMMENT_SUCCESS_MSG, commentResponseDto);
+    }
+
+    //댓글 삭제
+    @DeleteMapping("/{commentId}")
+    public Response deleteComment(@PathVariable Long boardId, @PathVariable Long commentId){
+        commentService.deleteComment(boardId, commentId);
+        return new Response(DELETE_COMMENT_SUCCESS_MSG);
     }
 
 }
