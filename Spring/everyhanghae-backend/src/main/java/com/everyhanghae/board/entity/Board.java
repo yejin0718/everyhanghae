@@ -16,6 +16,7 @@ import com.everyhanghae.comment.entity.Comment;
 import com.everyhanghae.common.Timestamped;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -50,6 +51,15 @@ public class Board extends Timestamped {
 	@OneToMany
 	private List<Comment> commentList = new ArrayList<>();
 
-
+	@Builder
+	public Board(String title, String writer, String content, BoardCategory category,
+		int likeCount, Long userId) {
+		this.title = title;
+		this.writer = writer;
+		this.content = content;
+		this.category = category;
+		this.likeCount = likeCount;
+		this.userId = userId;
+	}
 
 }
