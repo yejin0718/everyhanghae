@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -20,9 +21,15 @@ public class BoardLike {
     private Long likeId;
 
     @ManyToOne
+    @JoinColumn(name = "board_id")
     private Board boardId;
 
     @Column(nullable = true)
     private Long userId;
+
+    public BoardLike(Board boardId, Long userId) {
+        this.boardId = boardId;
+        this.userId = userId;
+    }
 
 }
