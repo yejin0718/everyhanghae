@@ -35,4 +35,8 @@ public class Comment extends Timestamped {
 
     @Column
     private Long userId;
+
+    public void update(String editComment) {
+        this.content = editComment;
+    }
 }

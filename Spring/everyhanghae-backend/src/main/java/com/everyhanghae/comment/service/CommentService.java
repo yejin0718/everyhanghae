@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_BOARD_EXCEPTION_MSG;
+import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_COMMENT_EXCEPTION_MSG;
 
 @RequiredArgsConstructor
 @Service
@@ -36,6 +37,24 @@ public class CommentService {
         return new CommentResponseDto(id, comment);
     }
 
+    public CommentResponseDto editComment(Long boardId, Long commentId, CommentRequestDto requestDto) {
+
+        //수정한 댓글 변수에 담기
+        String editComment = requestDto.getComment();
+
+        //유저 확인(추가 예정)
+
+        //게시글 확인
+        checkBoard(boardId);
+
+        //댓글 확인, 수정
+        Comment comment = checkComment(commentId);
+        comment.update(editComment);
+
+        return new CommentResponseDto(boardId, comment);
+    }
+
+
     //board확인
     private Board checkBoard(Long id){
         return boardRepository.findById(id).orElseThrow(
@@ -43,5 +62,11 @@ public class CommentService {
         );
     }
 
+    //comment확인
+    private Comment checkComment(Long id){
+        return commentRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException(NO_EXIST_COMMENT_EXCEPTION_MSG.getMsg())
+        );
+    }
 
 }
