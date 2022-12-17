@@ -48,7 +48,7 @@ public class Board extends Timestamped {
 	@Column
 	private Long userId;
 
-	@OneToMany
+	@OneToMany(mappedBy = "boardId")
 	private List<Comment> commentList = new ArrayList<>();
 
 	@Builder
