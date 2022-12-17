@@ -1,11 +1,11 @@
 .mainTop {
   margin: 50px auto 0;
-  max-width: 70vw;
+  max-width: 1000px;
   display: flex;
   justify-content: space-between;
 }
 
-.mainTopNumber {
+.mainTop > div {
   width: 20vw;
   height: 70px;
   display: flex;
@@ -16,27 +16,35 @@
   border-radius: 10px;
 }
 
-.mainTopButton {
-  width: 15vw;
+.mainTop > button {
+  width: 10vw;
+  font-size: 20px;
 }
 
 .mainMidMarquee {
   margin: 50px auto 0;
-  width: 60vw;
+  max-width: 700px;
   font-size: 40px;
+  border-left: #8997c5 5px solid;
+  border-right: #8997c5 5px solid;
+  border-radius: 10px;
 }
 
 .mainMiddleBtn {
-  width: 30vw;
+  max-width: 600px;
   margin: 30px auto;
   display: flex;
   justify-content: space-between;
   gap: 50px;
 }
 
+.mainMiddleBtn > button {
+  font-size: 30px;
+}
+
 .mainBoards {
   margin: 30px auto 0;
-  width: 70vw;
+  max-width: 1000px;
   height: 70px;
   display: flex;
   align-items: center;
@@ -47,11 +55,11 @@
 .mainBoardView {
   display: flex;
   margin: 0 0 0 20px;
-  width: 60vw;
+  width: 800px;
 }
 
 .likeAndCommentCount {
-  width: 7vw;
+  width: 100px;
   display: flex;
   justify-content: left;
 }
