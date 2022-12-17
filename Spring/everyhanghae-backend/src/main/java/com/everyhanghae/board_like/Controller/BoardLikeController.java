@@ -1,5 +1,6 @@
 package com.everyhanghae.board_like.Controller;
 
+
 import com.everyhanghae.board_like.Service.BoardLikeService;
 import com.everyhanghae.common.response.Response;
 import lombok.RequiredArgsConstructor;
