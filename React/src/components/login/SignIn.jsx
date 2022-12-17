@@ -6,21 +6,21 @@ import Card from "../elements/Card";
 const SignIn = () => {
   //login Input State
   const [loginValue, setLoginValue] = useState({
-    id: "",
+    email: "",
     pw: "",
-    isValidID: true,
+    isValidEmail: true,
     isValidPW: true,
   });
 
   const onChangeHandlerInput = (event) => {
     const { name, value } = event.target;
 
-    //event.target.value값이 빈 값일 때 isVailid Css 변경
-    if (name === "id" && value) {
-      setLoginValue({ ...loginValue, isValidID: true, [name]: value });
+    //event.target.value값이 빈 값일 때 loginValue Css 변경
+    if (name === "email" && value) {
+      setLoginValue({ ...loginValue, isValidEmail: true, [name]: value });
     } else if (name === "pw" && value) {
-      setLoginValue({ ...loginValue, isValidID: true, [name]: value });
-    } else if (name === "id" && !value) {
+      setLoginValue({ ...loginValue, isValidEmail: true, [name]: value });
+    } else if (name === "email" && !value) {
       setLoginValue({ ...loginValue, isValidPW: false, [name]: value });
     } else {
       setLoginValue({ ...loginValue, isValidPW: false, [name]: value });
@@ -31,13 +31,13 @@ const SignIn = () => {
   const onSubminLoginValueHandler = (event) => {
     //새로고침 막음
     event.preventDefault();
-    if (loginValue.id === "") {
-      setLoginValue({ ...loginValue, isValidID: false });
+    if (loginValue.email === "") {
+      setLoginValue({ ...loginValue, isValidEmail: false });
     } else if (loginValue.pw === "") {
       setLoginValue({ ...loginValue, isValidPW: false });
     } else {
       const newLoginValue = {
-        id: loginValue.id,
+        id: loginValue.email,
         pw: loginValue.pw,
       };
     }
@@ -47,23 +47,23 @@ const SignIn = () => {
   return (
     <Card className={classes.wrap}>
       <section className={classes.container}>
-        <h1>애브리항해</h1>
+        <h1>에브리항해</h1>
 
         <form onSubmit={onSubminLoginValueHandler}>
           <div className={classes.inputArea}>
             <label
-              htmlFor="id"
+              htmlFor="email"
               className={`${
-                loginValue.isValidID ? classes.label : classes.warning
+                loginValue.isValidEmail ? classes.label : classes.warning
               }`}
             >
-              ID
+              Email
             </label>
             <input
-              id="id"
-              name="id"
+              id="email"
+              name="email"
               type="text"
-              value={loginValue.id}
+              value={loginValue.email}
               onChange={onChangeHandlerInput}
             />
           </div>
@@ -74,7 +74,7 @@ const SignIn = () => {
                 loginValue.isValidPW ? classes.label : classes.warning
               }`}
             >
-              PASSWORD
+              Password
             </label>
             <input
               id="pw"
