@@ -37,6 +37,7 @@ public class CommentService {
         return new ResponseComment(id, comment);
     }
 
+    @Transactional
     public ResponseComment editComment(Long boardId, Long commentId, RequestComment requestDto) {
 
         //수정한 댓글 변수에 담기
@@ -53,6 +54,27 @@ public class CommentService {
 
         return new ResponseComment(boardId, comment);
     }
+
+
+    //댓글 삭제
+    @Transactional
+    public void deleteComment(Long boardId, Long commentId) {
+        //유저 확인(추가 예정)
+
+        //게시글 확인
+        checkBoard(boardId);
+
+        //댓글 확인
+        Comment comment = checkComment(commentId);
+
+        //유저 권한 체크(추가 예정)
+
+        //댓글 삭제
+        commentRepository.delete(comment);
+
+    }
+
+
 
 
     //board확인

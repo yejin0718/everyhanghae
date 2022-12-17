@@ -12,5 +12,9 @@ public class DataResponse<T> extends Response{
         this.data = data;
     }
 
+    public DataResponse(ResponseMessage responseMessage){
+        super(responseMessage);
+    }
+
 
 }
