@@ -24,11 +24,9 @@ public class BoardMapper {
 
 	public Board toBoard(RequestCreateBoard requestDto, Long userId) {
 		String category = requestDto.getCategory();
-		BoardCategory boardCategory;
-		try {
+		BoardCategory boardCategory = null;
+		if (!category.isEmpty()) {
 			boardCategory = BoardCategory.valueOf(category);
-		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException("카테고리 값이 잘못 됐습니다.");
 		}
 
 		return Board.builder()
@@ -50,12 +48,17 @@ public class BoardMapper {
 				.collect(Collectors.toList());
 		}
 
+		String category = "";
+		if (board.getCategory() != null) {
+			category = board.getCategory().name();
+		}
+
 		return ResponseBoard.builder()
 			.id(board.getBoardId())
 			.title(board.getTitle())
 			.writer(board.getWriter())
 			.content(board.getContent())
-			.category(board.getCategory().name())
+			.category(category)
 			.createdAt(board.getCreatedAt())
 			.likeCount(board.getLikeCount())
 			.commentList(commentResponseDtoList)
