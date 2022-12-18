@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.everyhanghae.board.dto.ResponseBoardListItem;
 import com.everyhanghae.board.dto.RequestCreateBoard;
 import com.everyhanghae.board.dto.ResponseBoard;
 import com.everyhanghae.board.entity.Board;
@@ -64,4 +65,21 @@ public class BoardMapper {
 			.commentList(commentResponseDtoList)
 			.build();
 	}
+
+	public ResponseBoardListItem toListResponseItem(Board board) {
+		String category = "";
+		if (board.getCategory() != null) {
+			category = board.getCategory().name();
+		}
+
+		return ResponseBoardListItem.builder()
+			.id(board.getBoardId())
+			.title(board.getTitle())
+			.writer(board.getWriter())
+			.category(category)
+			.likeCount(board.getLikeCount())
+			.commentCount(board.getCommentList().size())
+			.build();
+	}
+
 }
