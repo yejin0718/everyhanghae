@@ -32,7 +32,7 @@ label {
 }
 
 .select {
-  width: 250px;
+  width: 40%;
   height: 30px;
   border-radius: 6px;
   border: 1px solid #eee;
@@ -40,14 +40,14 @@ label {
 }
 
 .input {
-  width: 250px;
+  width: 100%;
   height: 30px;
   border-radius: 6px;
   border: 1px solid #eee;
   outline: none;
 }
 .input_warning {
-  width: 250px;
+  width: 100%;
   height: 30px;
   border-radius: 6px;
   border: 1px solid tomato;
