@@ -1,21 +1,25 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "./layout/Header";
 import Layout from "./layout/Layout";
-import Footer from "./layout/Footer";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
 import Main from "../pages/Main";
+import Write from "../pages/Write";
 import Detail from "../pages/Detail";
 
 const Router = () => {
   return (
     <BrowserRouter>
-      <Header />
-      <Layout>
-        <Routes>
+      <Routes>
+        <Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+        <Route element={<Layout />}>
           <Route path="/" element={<Main />} />
+          <Route path="/write" element={<Write />} />
           <Route path="/detail" element={<Detail />} />
-        </Routes>
-      </Layout>
-      <Footer />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 };

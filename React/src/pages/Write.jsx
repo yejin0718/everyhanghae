@@ -1,7 +1,12 @@
 import React from "react";
+import AddContents from "../components/write/AddContents";
 
 const Write = () => {
-  return <div>Write</div>;
+  return (
+    <>
+      <AddContents />
+    </>
+  );
 };
 
 export default Write;
