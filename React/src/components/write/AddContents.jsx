@@ -26,7 +26,9 @@ const AddWrite = () => {
     const { name, value } = event.target;
 
     ////event.target.value값이 빈 값일 때 loginValue Css 변경
-    if (name === "title" && value) {
+    if (name === "category" && value) {
+      setContents({ ...contents, [name]: value });
+    } else if (name === "title" && value) {
       setContents({ ...contents, isValidTitle: true, [name]: value });
     } else if (name === "contents" && value) {
       setContents({ ...contents, isValidContnts: true, [name]: value });

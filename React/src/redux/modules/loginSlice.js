@@ -8,16 +8,27 @@ const initialState = {
   error: null,
 };
 
-//__singin : 로그인
-
 //__signup : 회원가입
 export const __signup = createAsyncThunk(
   "__signup",
   async (payload, thunkAPI) => {
-    console.log(payload);
+    //console.log("__signup payload :" ,payload);
     try {
       const data = await instance.post(`users/signup`, payload);
       //console.log("data :", data.data);
+      return thunkAPI.fulfillWithValue(data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+//__singin : 로그인
+export const __signin = createAsyncThunk(
+  "__signin",
+  async (payload, thunkAPI) => {
+    console.log("__signin payload :", payload);
+    try {
+      const data = await instance.post(`users/login`, payload);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -30,7 +41,7 @@ export const loginSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    //__singup : 로그인 정보 보내기
+    //__singup : 회원가입 정보 보내기
     [__signup.fulfilled]: (state) => {
       state.isLoading = true;
     },
@@ -40,6 +51,19 @@ export const loginSlice = createSlice({
       alert(action.payload.msg);
     },
     [__signup.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    //__signin : 로그인 정보 보내기
+    [__signin.fulfilled]: (state) => {
+      state.isLoading = true;
+    },
+    [__signin.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.login = [...state.login, action.payload];
+      alert(action.payload.msg);
+    },
+    [__signin.rejected]: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },

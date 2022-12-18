@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classes from "./SignIn.module.css";
 import Card from "../../elements/Card";
 //redux
 import { useDispatch } from "react-redux";
+import { __signin } from "../../../redux/modules/loginSlice";
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   //login Input State
   const [loginValue, setLoginValue] = useState({
@@ -41,10 +43,11 @@ const SignIn = () => {
       setLoginValue({ ...loginValue, isValidPW: false });
     } else {
       const newLoginValue = {
-        id: loginValue.email,
-        pw: loginValue.pw,
+        email: loginValue.email,
+        password: loginValue.pw,
       };
-      //dispatch()
+      dispatch(__signin(newLoginValue));
+      navigate("/");
     }
   };
   //console.log("onSubmit :", loginValue);
@@ -91,9 +94,7 @@ const SignIn = () => {
           </div>
 
           <div className={classes.btnArea}>
-            <Link to="/">
-              <button>로그인</button>
-            </Link>
+            <button>로그인</button>
           </div>
         </form>
 
