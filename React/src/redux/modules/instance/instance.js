@@ -9,3 +9,12 @@ export const instance = axios.create({
     "Access-Control-Allow-Origin": "*",
   },
 });
+
+//request header
+// -> axios.interceptors ... //interceptors공부하기
+instance.interceptors.request.use((config) => {
+  if (config.headers === undefined) return;
+  const token = localStorage.getItem("id");
+  config.headers["Authorization"] = `${token}`;
+  return config;
+});

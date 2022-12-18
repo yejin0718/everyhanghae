@@ -20,14 +20,14 @@ const SignIn = () => {
     if (name === "email" && value) {
       setLoginValue({ ...loginValue, isValidEmail: true, [name]: value });
     } else if (name === "pw" && value) {
-      setLoginValue({ ...loginValue, isValidEmail: true, [name]: value });
+      setLoginValue({ ...loginValue, isValidPW: true, [name]: value });
     } else if (name === "email" && !value) {
-      setLoginValue({ ...loginValue, isValidPW: false, [name]: value });
+      setLoginValue({ ...loginValue, isValidEmail: false, [name]: value });
     } else {
       setLoginValue({ ...loginValue, isValidPW: false, [name]: value });
     }
   };
-  console.log("onChange :", loginValue);
+  //console.log("onChange :", loginValue);
 
   const onSubminLoginValueHandler = (event) => {
     //새로고침 막음
@@ -43,7 +43,7 @@ const SignIn = () => {
       };
     }
   };
-  console.log("onSubmit :", loginValue);
+  //console.log("onSubmit :", loginValue);
 
   return (
     <Card className={classes.wrap}>
@@ -87,7 +87,9 @@ const SignIn = () => {
           </div>
 
           <div className={classes.btnArea}>
-            <button>로그인</button>
+            <Link to="/">
+              <button>로그인</button>
+            </Link>
           </div>
         </form>
 

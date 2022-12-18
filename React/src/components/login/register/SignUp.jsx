@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import classes from "./SignUp.module.css";
 import Card from "../../elements/Card";
+import Button from "../../elements/Button";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -93,23 +94,26 @@ const SignUp = () => {
         <h1>회원가입</h1>
 
         <form onSubmit={onSubminLoginValueHandler}>
-          <div className={classes.inputArea}>
-            <label
-              htmlFor="email"
-              className={`${
-                loginValue.isValidEmail ? classes.label : classes.warning
-              }`}
-            >
-              이메일
-            </label>
-            <input
-              className={classes.input}
-              id="email"
-              name="email"
-              type="text"
-              value={loginValue.email}
-              onChange={onChangeHandlerInput}
-            />
+          <div className={classes.box}>
+            <div className={classes.inputArea}>
+              <label
+                htmlFor="email"
+                className={`${
+                  loginValue.isValidEmail ? classes.label : classes.warning
+                }`}
+              >
+                이메일
+              </label>
+              <input
+                className={classes.input}
+                id="email"
+                name="email"
+                type="text"
+                value={loginValue.email}
+                onChange={onChangeHandlerInput}
+              />
+            </div>
+            <Button className={classes.pwCheckBtn}>중복체크</Button>
           </div>
           <div className={classes.inputArea}>
             <label
@@ -171,7 +175,10 @@ const SignUp = () => {
           </div>
 
           <div className={classes.btnArea}>
-            <button>가입 완료</button>
+            <Link to="/login" className={classes.cancleBtn}>
+              취소
+            </Link>
+            <button className={classes.button}>가입 완료</button>
           </div>
         </form>
 
