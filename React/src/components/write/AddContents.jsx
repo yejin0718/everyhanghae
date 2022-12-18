@@ -17,29 +17,52 @@ const AddWrite = () => {
     title: "",
     contents: "",
     category: "",
+
+    isValidTitle: true,
+    isValidContnts: true,
   });
 
   const onChangeInputValueHandler = (event) => {
     const { name, value } = event.target;
-    setContents({ ...contents, [name]: value });
+
+    ////event.target.value값이 빈 값일 때 loginValue Css 변경
+    if (name === "title" && value) {
+      setContents({ ...contents, isValidTitle: true, [name]: value });
+    } else if (name === "contents" && value) {
+      setContents({ ...contents, isValidContnts: true, [name]: value });
+    } else if (name === "title" && !value) {
+      setContents({ ...contents, isValidTitle: false, [name]: value });
+    } else {
+      setContents({ ...contents, isValidContnts: false, [name]: value });
+    }
   };
   //console.log("contentsInput :", contents);
 
   const onSubmitInputValueHandler = async (event) => {
     event.preventDefault();
+
+    //보낼 데이터
     const newContents = {
       title: contents.title,
       writer: "이현정",
       content: contents.contents,
       category: contents.category,
     };
-    dispatch(__addContents(newContents));
-    //POST 후 빈값으로 변경
-    setContents({
-      title: "",
-      contents: "",
-      category: "",
-    });
+
+    if (contents.title === "") {
+      setContents({ ...contents, isValidTitle: false });
+    } else if (contents.contents === "") {
+      setContents({ ...contents, isValidContnts: false });
+    } else {
+      dispatch(__addContents(newContents));
+
+      //POST 후 빈값으로 변경
+      setContents({
+        title: "",
+        contents: "",
+        category: "",
+      });
+    }
   };
 
   return (
@@ -69,7 +92,9 @@ const AddWrite = () => {
           </select>
           <label htmlFor="title">제목</label>
           <input
-            className={classes.input}
+            className={`${
+              contents.isValidTitle ? classes.input : classes.input_warning
+            }`}
             id="title"
             name="title"
             type="text"
@@ -79,7 +104,11 @@ const AddWrite = () => {
           />
           <label htmlFor="contents">내용</label>
           <textarea
-            className={classes.textarea}
+            className={`${
+              contents.isValidContnts
+                ? classes.textarea
+                : classes.textarea_warning
+            }`}
             id="contents"
             name="contents"
             type="text"

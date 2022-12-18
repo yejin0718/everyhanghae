@@ -8,6 +8,7 @@ const SignIn = () => {
   const [loginValue, setLoginValue] = useState({
     email: "",
     pw: "",
+
     isValidEmail: true,
     isValidPW: true,
   });
