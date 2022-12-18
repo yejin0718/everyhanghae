@@ -1,12 +1,15 @@
 import React, { useState } from "react";
-import classes from "./AddWrite.module.css";
+import classes from "./AddContents.module.css";
 import Card from "../elements/Card";
 import Button from "../elements/Button";
 //redux
 import { useDispatch } from "react-redux";
-import { __addContents } from "../../redux/modules/addWriteSlice";
+import { __addContents } from "../../redux/modules/addContentsSlice";
 
 const AddWrite = () => {
+  //옵션 map 배열
+  const categoryOption = ["", "BE", "FE", "FREE", "SECRET"];
+
   const dispatch = useDispatch();
 
   //Input 값 State
@@ -24,8 +27,6 @@ const AddWrite = () => {
 
   const onSubmitInputValueHandler = async (event) => {
     event.preventDefault();
-
-    //POST할 데이터 (Request)
     const newContents = {
       title: contents.title,
       writer: "이현정",
@@ -33,6 +34,12 @@ const AddWrite = () => {
       category: contents.category,
     };
     dispatch(__addContents(newContents));
+    //POST 후 빈값으로 변경
+    setContents({
+      title: "",
+      contents: "",
+      category: "",
+    });
   };
 
   return (
@@ -49,10 +56,16 @@ const AddWrite = () => {
             value={contents.category}
             onChange={onChangeInputValueHandler}
           >
-            <option value="total">전체</option>
-            <option value="backend">백엔드</option>
-            <option value="frontend">프론트엔드</option>
-            <option value="etc">기타</option>
+            {categoryOption.map((item, index) => (
+              <option value={item} key={index}>
+                {item}
+              </option>
+            ))}
+            {/* <option value=""></option>
+            <option value="BE">백엔드</option>
+            <option value="FE">프론트엔드</option>
+            <option value="FREE">자유</option>
+            <option value="SECRET">비밀 (로그인 유저용)</option> */}
           </select>
           <label htmlFor="title">제목</label>
           <input
