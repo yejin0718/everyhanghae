@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./SignIn.module.css";
 import Card from "../../elements/Card";
+//redux
+import { useDispatch } from "react-redux";
 
 const SignIn = () => {
+  const dispatch = useDispatch();
   //login Input State
   const [loginValue, setLoginValue] = useState({
     email: "",
@@ -41,6 +44,7 @@ const SignIn = () => {
         id: loginValue.email,
         pw: loginValue.pw,
       };
+      //dispatch()
     }
   };
   //console.log("onSubmit :", loginValue);

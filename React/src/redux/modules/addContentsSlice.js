@@ -25,7 +25,7 @@ export const __addContents = createAsyncThunk(
   }
 );
 
-//addWriteSlice
+//addContents
 export const addContentsSlice = createSlice({
   name: "contents", //모듈이름
   initialState,
@@ -33,11 +33,11 @@ export const addContentsSlice = createSlice({
   extraReducers: {
     // __addComment : 댓글 추가
     [__addContents.pending]: (state) => {
-      //state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
+      state.isLoading = true; // 네트워크 요청이 시작되면 로딩상태를 true로 변경합니다.
     },
     [__addContents.fulfilled]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
-      state.comments = [...state.contents, action.payload]; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+      state.comments = [...state.contents, action.payload]; // Store에 있는 contents에 서버에서 가져온 contents를 넣습니다.
       alert(action.payload.msg);
     },
     [__addContents.rejected]: (state, action) => {
