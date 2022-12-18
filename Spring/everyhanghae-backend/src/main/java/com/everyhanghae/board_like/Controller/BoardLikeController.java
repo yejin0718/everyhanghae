@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static com.everyhanghae.common.response.ResponseMessage.INSERT_LIKE_SUCCESS_MSG;
+import static com.everyhanghae.common.response.ResponseMessage.DELETTE_LIKE_SUCCESS_MSG;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,8 +21,14 @@ public class BoardLikeController {
     /* 좋아요 등록, 취소 */
     @PostMapping("/{id}/like")
     public Response boardLike(@PathVariable Long id){
-        boardLikeService.boardLike(id);
-        return new Response(INSERT_LIKE_SUCCESS_MSG);
+
+        boolean likeboolean = boardLikeService.boardLike(id);
+        if (likeboolean){ // 좋아요 등록
+            return new Response(INSERT_LIKE_SUCCESS_MSG);
+        }else { // 좋아요 취소
+            return new Response(DELETTE_LIKE_SUCCESS_MSG);
+        }
+
     }
 
 }

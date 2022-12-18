@@ -6,6 +6,7 @@ import lombok.Getter;
 public enum ResponseMessage {
 
     // boardLike
+    DELETTE_LIKE_SUCCESS_MSG(200,"게시글 좋아요를 취소했습니다."),
     INSERT_LIKE_SUCCESS_MSG(200,"게시글 좋아요를 성공했습니다."),
     // comment
     CREATE_COMMENT_SUCCESS_MSG(200, "댓글 작성을 성공했습니다."),
