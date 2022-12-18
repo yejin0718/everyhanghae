@@ -1,10 +1,10 @@
 import React from "react";
-import AddWrite from "../components/write/AddWrite";
+import AddContents from "../components/write/AddContents";
 
 const Write = () => {
   return (
     <>
-      <AddWrite />
+      <AddContents />
     </>
   );
 };

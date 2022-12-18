@@ -1,14 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-//임시서버
-export const DB = process.env.REACT_APP_APPDBSERVER;
+import { instance } from "./instance/instance";
 
 //초기값
 const initialState = {
   contents: [],
-  isLoading: false, //서버상태 통신중:true 끝나면:false
-  error: null, //향후 에러 받아올 예정
+  isLoading: false,
+  error: null,
 };
 
 //createAsyncThunk를 통해서 thunk함수 생성
@@ -19,8 +16,8 @@ export const __addContents = createAsyncThunk(
   //두번째 인자 : 콜백함수
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.post(`${DB}/data`, payload);
-      console.log(data);
+      const data = await instance.post(`boards`, payload);
+      //console.log("data :", data.data);
       return thunkAPI.fulfillWithValue(data.data); //fulfillWithValue : 네트워크 요청이 성공한 경우, dispatch함. 인자로 payload를 넘겨줄 수 있음
     } catch (error) {
       return thunkAPI.rejectWithValue(error); //rejectWithValue : 네트워크 요청이 실패한 경우, dispatch함. 인자로 payload를 넘겨줄 수 있음
@@ -29,7 +26,7 @@ export const __addContents = createAsyncThunk(
 );
 
 //addWriteSlice
-export const addWriteSlice = createSlice({
+export const addContentsSlice = createSlice({
   name: "contents", //모듈이름
   initialState,
   reducers: {},
@@ -41,6 +38,7 @@ export const addWriteSlice = createSlice({
     [__addContents.fulfilled]: (state, action) => {
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
       state.comments = [...state.contents, action.payload]; // Store에 있는 todos에 서버에서 가져온 todos를 넣습니다.
+      alert(action.payload.msg);
     },
     [__addContents.rejected]: (state, action) => {
       state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
@@ -49,5 +47,5 @@ export const addWriteSlice = createSlice({
   },
 });
 
-export const {} = addWriteSlice.actions;
-export default addWriteSlice.reducer;
+export const {} = addContentsSlice.actions;
+export default addContentsSlice.reducer;

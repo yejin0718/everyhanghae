@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import classes from "./SignUp.module.css";
-import Card from "../elements/Card";
+import Card from "../../elements/Card";
 
 const SignUp = () => {
   const navigate = useNavigate();

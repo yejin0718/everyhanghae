@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./SignIn.module.css";
-import Card from "../elements/Card";
+import Card from "../../elements/Card";
 
 const SignIn = () => {
   //login Input State
