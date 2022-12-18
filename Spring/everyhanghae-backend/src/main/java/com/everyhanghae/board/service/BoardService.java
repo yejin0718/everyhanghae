@@ -1,8 +1,12 @@
 package com.everyhanghae.board.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.everyhanghae.board.dto.ResponseBoardListItem;
 import com.everyhanghae.board.dto.RequestCreateBoard;
 import com.everyhanghae.board.dto.ResponseBoard;
 import com.everyhanghae.board.entity.Board;
@@ -27,6 +31,16 @@ public class BoardService {
 		Board savedBoard = boardRepository.save(board);
 
 		return boardMapper.toResponse(savedBoard);
+	}
+
+	@Transactional(readOnly = true)
+	public List<ResponseBoardListItem> findAllBoards() {
+		List<Board> boardList = boardRepository.findAll();
+		List<ResponseBoardListItem> listResponseBoardItemList = boardList.stream()
+			.map(e -> boardMapper.toListResponseItem(e))
+			.collect(Collectors.toList());
+
+		return listResponseBoardItemList;
 	}
 
 }
