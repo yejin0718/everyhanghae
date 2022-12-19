@@ -73,4 +73,10 @@ public class Board extends Timestamped {
 	public void likeUpdate(int count) {
 		this.likeCount = count;
 	}
+
+	public void update(String title, String content, String category) {
+		this.title = title;
+		this.content = content;
+		this.category = BoardCategory.valueOf(category);
+	}
 }
