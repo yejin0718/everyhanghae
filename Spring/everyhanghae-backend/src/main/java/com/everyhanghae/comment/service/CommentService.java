@@ -76,6 +76,7 @@ public class CommentService {
 
 
 
+
     //board확인
     private Board checkBoard(Long id){
         return boardRepository.findById(id).orElseThrow(
