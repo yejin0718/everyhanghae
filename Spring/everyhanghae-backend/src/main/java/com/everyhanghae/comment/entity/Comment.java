@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Getter
@@ -31,6 +32,7 @@ public class Comment extends Timestamped {
     private String writer;
 
     @ManyToOne
+    @JoinColumn(name = "board_id")
     private Board boardId;
 
     @Column
