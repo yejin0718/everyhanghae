@@ -19,9 +19,11 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/signup")
+    @GetMapping("/register")
     public ModelAndView signupPage() {
-        return new ModelAndView("register");
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("register");
+        return modelAndView;
     }
 
     @PostMapping("/signup")
