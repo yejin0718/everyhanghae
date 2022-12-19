@@ -12,22 +12,29 @@ import static com.everyhanghae.common.response.ResponseMessage.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/boards/{boardId}/comment")
+@RequestMapping("/api/boards/{boardId}/comments")
 public class CommentController {
     private final CommentService commentService;
 
     //댓글 작성
     @PostMapping
     public DataResponse<ResponseComment> writeComment(@PathVariable Long boardId, @RequestBody RequestComment requestDto) {
-        ResponseComment commentResponseDto = commentService.createComment(boardId, requestDto);
-        return new DataResponse<>(CREATE_COMMENT_SUCCESS_MSG, commentResponseDto);
+        ResponseComment responseComment = commentService.createComment(boardId, requestDto);
+        return new DataResponse<>(CREATE_COMMENT_SUCCESS_MSG, responseComment);
     }
 
     //댓글 수정
     @PutMapping("/{commentId}")
     public DataResponse<ResponseComment> editComment(@PathVariable Long boardId, @PathVariable Long commentId, @RequestBody RequestComment requestDto){
-        ResponseComment commentResponseDto = commentService.editComment(boardId, commentId, requestDto);
-        return new DataResponse<>(UPDATE_COMMENT_SUCCESS_MSG, commentResponseDto);
+        ResponseComment responseComment = commentService.editComment(boardId, commentId, requestDto);
+        return new DataResponse<>(UPDATE_COMMENT_SUCCESS_MSG, responseComment);
+    }
+
+    //댓글 삭제
+    @DeleteMapping("/{commentId}")
+    public Response deleteComment(@PathVariable Long boardId, @PathVariable Long commentId){
+        commentService.deleteComment(boardId, commentId);
+        return new Response(DELETE_COMMENT_SUCCESS_MSG);
     }
 
     //댓글 삭제
