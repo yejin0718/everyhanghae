@@ -1,6 +1,7 @@
 package com.everyhanghae.user.service;
 
 import com.everyhanghae.user.dto.RequestCreateUser;
+import com.everyhanghae.user.dto.RequestLoginUser;
 import com.everyhanghae.user.entity.User;
 import com.everyhanghae.user.entity.UserRole;
 import com.everyhanghae.user.jwt.JwtUtil;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 @Service
@@ -43,5 +45,22 @@ public class UserService {
 
         User user = new User(email, password, nickname, userRole);
         userRepository.save(user);
+    }
+
+    @Transactional(readOnly = true)
+    public void login(RequestLoginUser requestLoginUser, HttpServletResponse httpServletResponse) {
+        String email = requestLoginUser.getEmail();
+        String password = requestLoginUser.getPassword();
+
+        // 사용자 확인
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new IllegalArgumentException("등록된 이메일이 없습니다.")
+        );
+        // 비밀번호 확인
+        if(!user.getPassword().equals(password)){
+            throw  new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+        // 로그인 시 httpServletResponse 헤더 토큰추가
+        httpServletResponse.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getEmail(), user.getUserRole()));
     }
 }
