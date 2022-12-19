@@ -36,9 +36,12 @@ out/
 ### VS Code ###
 .vscode/
 
-gradlew
-gradlew.bat
 gradle
 everyhanghae-backend.iml
-application-jwtkey.properties
 
+### MySQL ###
+src/main/resources/application-dev.properties
+src/main/resources/application-prod.properties
+
+## jwt
+application-jwtkey.properties
