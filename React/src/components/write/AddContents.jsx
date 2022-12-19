@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./AddContents.module.css";
 import Card from "../elements/Card";
 import Button from "../elements/Button";
 //redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { __addContents } from "../../redux/modules/addContentsSlice";
 
 const AddWrite = () => {
@@ -11,9 +11,11 @@ const AddWrite = () => {
   const categoryOption = ["", "BE", "FE", "FREE", "SECRET"];
 
   const dispatch = useDispatch();
+  const { contents } = useSelector((state) => state.contents);
+  console.log("확인", contents.contents);
 
   //Input 값 State
-  const [contents, setContents] = useState({
+  const [contentsValue, setContentsValue] = useState({
     title: "",
     contents: "",
     category: "",
@@ -22,47 +24,70 @@ const AddWrite = () => {
     isValidContnts: true,
   });
 
+  useEffect(() => {
+    if (contents.contents === "" || contents.contents === undefined) {
+      return;
+    }
+    console.log(contents.contents);
+  }, [contents.contents]);
+
   const onChangeInputValueHandler = (event) => {
     const { name, value } = event.target;
 
     ////event.target.value값이 빈 값일 때 loginValue Css 변경
     if (name === "category" && value) {
-      setContents({ ...contents, [name]: value });
+      setContentsValue({ ...contentsValue, [name]: value });
     } else if (name === "title" && value) {
-      setContents({ ...contents, isValidTitle: true, [name]: value });
+      setContentsValue({ ...contentsValue, isValidTitle: true, [name]: value });
     } else if (name === "contents" && value) {
-      setContents({ ...contents, isValidContnts: true, [name]: value });
+      setContentsValue({
+        ...contentsValue,
+        isValidContnts: true,
+        [name]: value,
+      });
     } else if (name === "title" && !value) {
-      setContents({ ...contents, isValidTitle: false, [name]: value });
+      setContentsValue({
+        ...contentsValue,
+        isValidTitle: false,
+        [name]: value,
+      });
     } else {
-      setContents({ ...contents, isValidContnts: false, [name]: value });
+      setContentsValue({
+        ...contentsValue,
+        isValidContnts: false,
+        [name]: value,
+      });
     }
   };
   //console.log("contentsInput :", contents);
 
-  const onSubmitInputValueHandler = async (event) => {
+  const onSubmitInputValueHandler = (event) => {
     event.preventDefault();
 
     //보낼 데이터
     const newContents = {
-      title: contents.title,
       writer: "이현정",
-      content: contents.contents,
-      category: contents.category,
+      title: contentsValue.title,
+      content: contentsValue.contents,
+      category: contentsValue.category,
     };
 
-    if (contents.title === "") {
-      setContents({ ...contents, isValidTitle: false });
-    } else if (contents.contents === "") {
-      setContents({ ...contents, isValidContnts: false });
+    if (contentsValue.title === "") {
+      setContentsValue({ ...contentsValue, isValidTitle: false });
+    } else if (contentsValue.contents === "") {
+      setContentsValue({ ...contentsValue, isValidContnts: false });
     } else {
       dispatch(__addContents(newContents));
+      alert(contents.contents);
 
       //POST 후 빈값으로 변경
-      setContents({
+      setContentsValue({
         title: "",
         contents: "",
         category: "",
+
+        isValidTitle: true,
+        isValidContnts: true,
       });
     }
   };
@@ -78,7 +103,7 @@ const AddWrite = () => {
           <select
             name="category"
             className={classes.select}
-            value={contents.category}
+            value={contentsValue.category}
             onChange={onChangeInputValueHandler}
           >
             {categoryOption.map((item, index) => (
@@ -95,26 +120,26 @@ const AddWrite = () => {
           <label htmlFor="title">제목</label>
           <input
             className={`${
-              contents.isValidTitle ? classes.input : classes.input_warning
+              contentsValue.isValidTitle ? classes.input : classes.input_warning
             }`}
             id="title"
             name="title"
             type="text"
             maxLength="30"
-            value={contents.title}
+            value={contentsValue.title}
             onChange={onChangeInputValueHandler}
           />
           <label htmlFor="contents">내용</label>
           <textarea
             className={`${
-              contents.isValidContnts
+              contentsValue.isValidContnts
                 ? classes.textarea
                 : classes.textarea_warning
             }`}
             id="contents"
             name="contents"
             type="text"
-            value={contents.contents}
+            value={contentsValue.contents}
             onChange={onChangeInputValueHandler}
           />
         </div>
