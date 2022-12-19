@@ -8,7 +8,9 @@ import com.everyhanghae.common.response.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import static com.everyhanghae.common.response.ResponseMessage.*;
+import static com.everyhanghae.common.response.ResponseMessage.CREATE_COMMENT_SUCCESS_MSG;
+import static com.everyhanghae.common.response.ResponseMessage.DELETE_COMMENT_SUCCESS_MSG;
+import static com.everyhanghae.common.response.ResponseMessage.UPDATE_COMMENT_SUCCESS_MSG;
 
 @RestController
 @RequiredArgsConstructor
