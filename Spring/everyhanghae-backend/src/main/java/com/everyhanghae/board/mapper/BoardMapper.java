@@ -1,21 +1,19 @@
 package com.everyhanghae.board.mapper;
 
+import com.everyhanghae.board.dto.RequestCreateBoard;
+import com.everyhanghae.board.dto.ResponseBoard;
+import com.everyhanghae.board.dto.ResponseBoardListItem;
+import com.everyhanghae.board.entity.Board;
+import com.everyhanghae.board.entity.BoardCategory;
+import com.everyhanghae.comment.dto.ResponseComment;
+import com.everyhanghae.comment.entity.Comment;
+import com.everyhanghae.comment.mapper.CommentMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Component;
-
-import com.everyhanghae.board.dto.ResponseBoardListItem;
-import com.everyhanghae.board.dto.RequestCreateBoard;
-import com.everyhanghae.board.dto.ResponseBoard;
-import com.everyhanghae.board.entity.Board;
-import com.everyhanghae.board.entity.BoardCategory;
-import com.everyhanghae.comment.dto.CommentResponseDto;
-import com.everyhanghae.comment.entity.Comment;
-import com.everyhanghae.comment.mapper.CommentMapper;
-
-import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Component
@@ -42,10 +40,10 @@ public class BoardMapper {
 
 	public ResponseBoard toResponse(Board board) {
 		List<Comment> commentList = board.getCommentList();
-		List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+		List<ResponseComment> commentResponseDtoList = new ArrayList<>();
 		if (commentList != null) {	// commentList -> CommentResponseDtoList 로 변환
 			commentResponseDtoList = commentList.stream()
-				.map(c -> commentMapper.toResponseComment(board.getBoardId(), c))
+				.map(c -> commentMapper.toResponse(c))
 				.collect(Collectors.toList());
 		}
 

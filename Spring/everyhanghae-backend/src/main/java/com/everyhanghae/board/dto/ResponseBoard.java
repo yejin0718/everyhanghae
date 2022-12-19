@@ -1,12 +1,11 @@
 package com.everyhanghae.board.dto;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import com.everyhanghae.comment.dto.CommentResponseDto;
-
+import com.everyhanghae.comment.dto.ResponseComment;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @Getter
@@ -19,6 +18,6 @@ public class ResponseBoard {
 	private String category;
 	private LocalDateTime createdAt;
 	private int likeCount;
-	private List<CommentResponseDto> commentList;
+	private List<ResponseComment> commentList;
 
 }
