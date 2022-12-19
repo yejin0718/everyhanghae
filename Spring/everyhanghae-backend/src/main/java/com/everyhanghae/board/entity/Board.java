@@ -62,11 +62,11 @@ public class Board extends Timestamped {
 		this.userId = userId;
 	}
 
-  public void unLike(Board board) {
+  public void unLike() {
       this.likeCount--;
   }
 
-  public void Like(Board board) {
+  public void like() {
       this.likeCount++;
   }
 
