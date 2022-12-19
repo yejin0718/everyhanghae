@@ -2,6 +2,8 @@ package com.everyhanghae.board.controller;
 
 import static com.everyhanghae.common.response.ResponseMessage.CREATE_BOARD_SUCCESS_MSG;
 
+import javax.validation.Valid;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +24,7 @@ public class BoardController {
 	private final BoardService boardService;
 
 	@PostMapping
-	public DataResponse<ResponseBoard> writeBoard(@RequestBody RequestCreateBoard requestDto) {
+	public DataResponse<ResponseBoard> writeBoard(@Valid @RequestBody RequestCreateBoard requestDto) {
 		ResponseBoard response = boardService.createBoard(requestDto);
 		return new DataResponse<>(CREATE_BOARD_SUCCESS_MSG, response);
 	}

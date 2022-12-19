@@ -21,6 +21,7 @@ public enum ResponseMessage {
     LOGIN_USER_SUCCESS_MSG(200, "로그인이 성공했습니다.");
 
 
+
     private final int status;
     private final String msg;
 
