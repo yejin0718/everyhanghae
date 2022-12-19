@@ -1,4 +1,3 @@
-/*
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { instance } from "./instance/instance";
 
@@ -80,4 +79,3 @@ export const loginSlice = createSlice({
 
 export const {} = loginSlice.actions;
 export default loginSlice.reducer;
-*/
