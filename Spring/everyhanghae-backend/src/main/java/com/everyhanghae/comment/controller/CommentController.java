@@ -12,7 +12,7 @@ import static com.everyhanghae.common.response.ResponseMessage.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/boards/{boardId}/comment")
+@RequestMapping("/api/boards/{boardId}/comments")
 public class CommentController {
     private final CommentService commentService;
 
