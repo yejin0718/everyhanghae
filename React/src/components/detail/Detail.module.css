@@ -1,6 +1,6 @@
 .detailTop {
   max-width: 1200px;
-  height: 70vh;
+  height: 600px;
   margin: 50px auto 0;
   border: 2px solid #8997c5;
   border-radius: 20px;
@@ -11,7 +11,7 @@
   height: 50px;
   display: flex;
   align-items: center;
-  font-size: 30px;
+  font-size: 20px;
 }
 .detailTitleAndButton > div {
   width: 900px;
@@ -103,4 +103,18 @@
 
 .commentView > button {
   border-radius: 10px;
+}
+
+.detailCategory {
+  width: 1080px;
+  margin: 20px 0 20px 50px;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.detalTitle {
+  width: 300px;
+  margin: 20px 0 20px 50px;
+  font-size: 30px;
 }

@@ -5,6 +5,7 @@ import Register from "../pages/Register";
 import Main from "../pages/Main";
 import Write from "../pages/Write";
 import Detail from "../pages/Detail";
+import Update from "../pages/Update";
 
 const Router = () => {
   return (
@@ -18,6 +19,7 @@ const Router = () => {
           <Route path="/" element={<Main />} />
           <Route path="/write" element={<Write />} />
           <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/detail/:id/update" element={<Update />} />
         </Route>
       </Routes>
     </BrowserRouter>
