@@ -2,6 +2,7 @@ package com.everyhanghae.comment.mapper;
 
 import com.everyhanghae.board.entity.Board;
 import com.everyhanghae.comment.dto.RequestComment;
+import com.everyhanghae.comment.dto.ResponseComment;
 import com.everyhanghae.comment.entity.Comment;
 import org.springframework.stereotype.Component;
 
@@ -16,4 +17,7 @@ public class CommentMapper {
                 .build();
     }
 
+    public ResponseComment toResponse(Comment comment) {
+        return new ResponseComment(comment.getBoardId().getBoardId(), comment);
+    }
 }

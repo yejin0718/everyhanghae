@@ -37,4 +37,11 @@ public class CommentController {
         return new Response(DELETE_COMMENT_SUCCESS_MSG);
     }
 
+    //댓글 삭제
+    @DeleteMapping("/{commentId}")
+    public Response deleteComment(@PathVariable Long boardId, @PathVariable Long commentId){
+        commentService.deleteComment(boardId, commentId);
+        return new Response(DELETE_COMMENT_SUCCESS_MSG);
+    }
+
 }
