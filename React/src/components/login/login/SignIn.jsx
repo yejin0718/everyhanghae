@@ -2,13 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "./SignIn.module.css";
 import Card from "../../elements/Card";
-//redux
-import { useDispatch } from "react-redux";
-import { __signin } from "../../../redux/modules/loginSlice";
+import { sign_in } from "../../../core/api/LoginAPI";
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   //login Input State
   const [loginValue, setLoginValue] = useState({
     email: "",
@@ -18,7 +15,7 @@ const SignIn = () => {
     isValidPW: true,
   });
 
-  const onChangeHandlerInput = (event) => {
+  const onChangeInputHandler = (event) => {
     const { name, value } = event.target;
 
     //event.target.value값이 빈 값일 때 loginValue Css 변경
@@ -46,8 +43,15 @@ const SignIn = () => {
         email: loginValue.email,
         password: loginValue.pw,
       };
-      dispatch(__signin(newLoginValue));
-      navigate("/");
+      console.log(newLoginValue);
+      sign_in(newLoginValue)
+        .then((res) => {
+          localStorage.setItem("id", res.headers.authorization);
+          navigate("/");
+        })
+        .catch((error) => {
+          //console.log(error);
+        });
     }
   };
   //console.log("onSubmit :", loginValue);
@@ -72,7 +76,7 @@ const SignIn = () => {
               name="email"
               type="text"
               value={loginValue.email}
-              onChange={onChangeHandlerInput}
+              onChange={onChangeInputHandler}
             />
           </div>
           <div className={classes.inputArea}>
@@ -89,7 +93,7 @@ const SignIn = () => {
               name="pw"
               type="password"
               value={loginValue.pw}
-              onChange={onChangeHandlerInput}
+              onChange={onChangeInputHandler}
             />
           </div>
 

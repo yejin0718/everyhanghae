@@ -3,13 +3,10 @@ import { useNavigate, Link } from "react-router-dom";
 import classes from "./SignUp.module.css";
 import Card from "../../elements/Card";
 import Button from "../../elements/Button";
-//redux
-import { useDispatch } from "react-redux";
-import { __signup } from "../../../redux/modules/loginSlice";
+import { sign_up } from "../../../core/api/LoginAPI";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   //항해기수 옵션 map 배열
   const generationOption = [
@@ -83,12 +80,14 @@ const SignUp = () => {
       //모든 input이 빈 값이 아닌 경우 POST
       const newLoginValue = {
         email: loginValue.email,
-        pwssword: loginValue.pw,
+        password: loginValue.pw,
         nickname: loginValue.nickname,
-        generation: loginValue.generation,
+        generation: parseInt(loginValue.generation),
       };
-      dispatch(__signup(newLoginValue));
-      navigate(`/login`);
+      sign_up(newLoginValue).then((res) => {
+        console.log(res);
+        navigate(`/login`);
+      });
     }
   };
   console.log("onSubmit :", loginValue);

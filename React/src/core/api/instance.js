@@ -14,6 +14,7 @@ export const instance = axios.create({
 // -> axios.interceptors ... //interceptors공부하기
 instance.interceptors.request.use((config) => {
   if (config.headers === undefined) return;
+  //localStorage.getItem("key") -> 키로 부터 데이터 읽기
   const token = localStorage.getItem("id");
   config.headers["Authorization"] = `${token}`;
   return config;
