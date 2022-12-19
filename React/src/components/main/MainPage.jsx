@@ -13,15 +13,19 @@ const MainPage = () => {
   useEffect(() => {
     dispatch(__getMainView());
   }, [dispatch]);
+
   const onClickWriteHandler = () => {
     navigate("/write");
   };
   const mainView = useSelector((state) => state.board.data);
 
   const [a, setA] = useState(mainView);
-  // useEffect(() => {
-  //   return () => setA(TOTAL);
-  // });
+  useEffect(() => {
+    if (mainView.length === 0 || mainView === undefined) {
+      return;
+    }
+    setA(mainView);
+  }, [mainView]);
   const TOTAL = mainView;
   const FE = mainView.filter((a) => a.category === "FE");
   const BE = mainView.filter((a) => a.category === "BE");
