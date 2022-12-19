@@ -70,5 +70,7 @@ public class Board extends Timestamped {
       this.likeCount++;
     }
 
-
+	public void likeUpdate(int count) {
+		this.likeCount = count;
+	}
 }
