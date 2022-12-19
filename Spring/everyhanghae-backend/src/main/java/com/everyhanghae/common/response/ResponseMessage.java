@@ -16,7 +16,10 @@ public enum ResponseMessage {
     CREATE_BOARD_SUCCESS_MSG(201, "게시글 작성을 성공했습니다.");
 
     // signup
-    CREATE_USER_SUCCESS_MSG(201, "회원가입이 성공했습니다.");
+    CREATE_USER_SUCCESS_MSG(201, "회원가입이 성공했습니다."),
+    // login
+    LOGIN_USER_SUCCESS_MSG(200, "로그인이 성공했습니다.");
+
 
 
     private final int status;
