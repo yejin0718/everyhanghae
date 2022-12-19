@@ -63,3 +63,8 @@
   display: flex;
   justify-content: left;
 }
+
+.mainWriter {
+  width: 150px;
+  margin-left: 20px;
+}
