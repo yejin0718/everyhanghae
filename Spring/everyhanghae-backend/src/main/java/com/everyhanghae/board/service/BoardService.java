@@ -62,6 +62,17 @@ public class BoardService {
 		return boardMapper.toResponse(board);
 	}
 
+	@Transactional
+	public void deleteBoard(Long boardId, String email) {
+		User user = findUser(email);
+		Board board = findBoard(boardId);
+		if (board.getUserId() != user.getUserId()) {
+			throw new IllegalArgumentException(NOT_AUTHOR_USER_EXCEPTION_MSG.getMsg());
+		}
+
+		boardRepository.delete(board);
+	}
+
 	private User findUser(String email){
 		return userRepository.findByEmail(email)
 			.orElseThrow(() -> new IllegalArgumentException( NO_EXIST_USER_EXCEPTION_MSG.getMsg()));
@@ -71,5 +82,6 @@ public class BoardService {
 		return boardRepository.findById(id)
 			.orElseThrow(() -> new IllegalArgumentException(NO_EXIST_BOARD_EXCEPTION_MSG.getMsg()));
 	}
+
 
 }
