@@ -36,11 +36,15 @@ public class Board extends Timestamped {
     @Column
     private Long userId;
 
-    public void unLike(Board board) {
+    public void unLike() {
         this.likeCount--;
     }
 
-    public void Like(Board board) {
+    public void like() {
         this.likeCount++;
+    }
+
+    public void likeUpdate(int count) {
+        this.likeCount = count;
     }
 }

@@ -31,11 +31,11 @@ public class BoardLikeService {
 
         if(like.isPresent()){ // 이미 좋아요를 했을 때
             BoardLike boardLike = like.get();
-            board.unLike(board);
+            board.unLike();
             boardLikeRepository. delete(boardLike);
         }else{
             BoardLike boardLike = new BoardLike(board, 1L); // 임시 USER_ID 값
-            board.Like(board);
+            board.like();
             boardLikeRepository.save(boardLike);
             likeboolean = true;
         }
