@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import classes from "./AddContents.module.css";
 import Card from "../elements/Card";
 import Button from "../elements/Button";
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { __addContents } from "../../redux/modules/addContentsSlice";
+import AlertModal from "./AlertModal";
 
 const AddWrite = () => {
-  //옵션 map 배열
   const categoryOption = ["", "BE", "FE", "FREE", "SECRET"];
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { contents } = useSelector((state) => state.contents);
-  console.log("확인", contents.contents);
+  // const { contents } = useSelector((state) => state.contents);
+  // console.log("contents :", contents.contents);
 
-  //Input 값 State
+  //모달창 State
+  const [modal, setModal] = useState(false);
+  //Input value State
   const [contentsValue, setContentsValue] = useState({
     title: "",
     contents: "",
@@ -23,13 +26,13 @@ const AddWrite = () => {
     isValidTitle: true,
     isValidContnts: true,
   });
-
-  useEffect(() => {
-    if (contents.contents === "" || contents.contents === undefined) {
-      return;
-    }
-    console.log(contents.contents);
-  }, [contents.contents]);
+  //상태값과 데이터를 읽어오는 타이밍이 다를 수 있음 -> useEffect를 통해서 재렌더링함
+  // useEffect(() => {
+  //   if (contents.contents === "" || contents.contents === undefined) {
+  //     return;
+  //   }
+  //   console.log(contents.contents);
+  // }, [contents.contents]);
 
   const onChangeInputValueHandler = (event) => {
     const { name, value } = event.target;
@@ -60,94 +63,95 @@ const AddWrite = () => {
     }
   };
   //console.log("contentsInput :", contents);
-
   const onSubmitInputValueHandler = (event) => {
     event.preventDefault();
-
     //보낼 데이터
     const newContents = {
-      writer: "이현정",
       title: contentsValue.title,
       content: contentsValue.contents,
       category: contentsValue.category,
     };
-
     if (contentsValue.title === "") {
       setContentsValue({ ...contentsValue, isValidTitle: false });
     } else if (contentsValue.contents === "") {
       setContentsValue({ ...contentsValue, isValidContnts: false });
     } else {
       dispatch(__addContents(newContents));
-      alert(contents.contents);
-
+      setModal(true);
       //POST 후 빈값으로 변경
       setContentsValue({
         title: "",
         contents: "",
         category: "",
-
         isValidTitle: true,
         isValidContnts: true,
       });
     }
   };
+  const alertHandler = () => {
+    setModal(false);
+    navigate("/");
+  };
 
   return (
-    <form className={classes.wrap} onSubmit={onSubmitInputValueHandler}>
-      <Card className={classes.box}>
-        <header className={classes.header}>
-          <h3>게시글 작성</h3>
-        </header>
-        <div className={classes.inputBox}>
-          <label htmlFor="category">카테고리</label>
-          <select
-            name="category"
-            className={classes.select}
-            value={contentsValue.category}
-            onChange={onChangeInputValueHandler}
-          >
-            {categoryOption.map((item, index) => (
-              <option value={item} key={index}>
-                {item}
-              </option>
-            ))}
-            {/* <option value=""></option>
-            <option value="BE">백엔드</option>
-            <option value="FE">프론트엔드</option>
-            <option value="FREE">자유</option>
-            <option value="SECRET">비밀 (로그인 유저용)</option> */}
-          </select>
-          <label htmlFor="title">제목</label>
-          <input
-            className={`${
-              contentsValue.isValidTitle ? classes.input : classes.input_warning
-            }`}
-            id="title"
-            name="title"
-            type="text"
-            maxLength="30"
-            value={contentsValue.title}
-            onChange={onChangeInputValueHandler}
-          />
-          <label htmlFor="contents">내용</label>
-          <textarea
-            className={`${
-              contentsValue.isValidContnts
-                ? classes.textarea
-                : classes.textarea_warning
-            }`}
-            id="contents"
-            name="contents"
-            type="text"
-            value={contentsValue.contents}
-            onChange={onChangeInputValueHandler}
-          />
-        </div>
-        <footer className={classes.footer}>
-          <Button className={classes.addBtn}>등록</Button>
-        </footer>
-      </Card>
-    </form>
+    <div>
+      {modal ? (
+        <AlertModal onAlert={alertHandler} />
+      ) : (
+        <form className={classes.wrap} onSubmit={onSubmitInputValueHandler}>
+          <Card className={classes.box}>
+            <header className={classes.header}>
+              <h3>게시글 작성</h3>
+            </header>
+            <div className={classes.inputBox}>
+              <label htmlFor="category">카테고리</label>
+              <select
+                name="category"
+                className={classes.select}
+                value={contentsValue.category}
+                onChange={onChangeInputValueHandler}
+              >
+                {categoryOption.map((item, index) => (
+                  <option value={item} key={index}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+              <label htmlFor="title">제목</label>
+              <input
+                className={`${
+                  contentsValue.isValidTitle
+                    ? classes.input
+                    : classes.input_warning
+                }`}
+                id="title"
+                name="title"
+                type="text"
+                maxLength="30"
+                value={contentsValue.title}
+                onChange={onChangeInputValueHandler}
+              />
+              <label htmlFor="contents">내용</label>
+              <textarea
+                className={`${
+                  contentsValue.isValidContnts
+                    ? classes.textarea
+                    : classes.textarea_warning
+                }`}
+                id="contents"
+                name="contents"
+                type="text"
+                value={contentsValue.contents}
+                onChange={onChangeInputValueHandler}
+              />
+            </div>
+            <footer className={classes.footer}>
+              <Button className={classes.addBtn}>등록</Button>
+            </footer>
+          </Card>
+        </form>
+      )}
+    </div>
   );
 };
 

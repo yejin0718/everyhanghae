@@ -43,14 +43,13 @@ const SignIn = () => {
         email: loginValue.email,
         password: loginValue.pw,
       };
-      console.log(newLoginValue);
       sign_in(newLoginValue)
         .then((res) => {
           localStorage.setItem("id", res.headers.authorization);
           navigate("/");
         })
         .catch((error) => {
-          //console.log(error);
+          console.log(error);
         });
     }
   };
