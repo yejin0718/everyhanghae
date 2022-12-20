@@ -47,5 +47,6 @@ public class UserController {
     public DataResponse<ResponseInfoUser> login(@RequestBody RequestLoginUser requestLoginUser, HttpServletResponse httpServletResponse) {
         ResponseInfoUser responseInfoUser = userService.login(requestLoginUser,httpServletResponse);
         return new DataResponse<>(LOGIN_USER_SUCCESS_MSG, responseInfoUser);
+
     }
 }
