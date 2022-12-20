@@ -3,6 +3,7 @@ package com.everyhanghae.user.controller;
 import com.everyhanghae.common.response.DataResponse;
 import com.everyhanghae.common.response.Response;
 import com.everyhanghae.user.dto.RequestCreateUser;
+import com.everyhanghae.user.dto.RequestDuplicateUser;
 import com.everyhanghae.user.dto.RequestLoginUser;
 import com.everyhanghae.user.dto.ResponseInfoUser;
 import com.everyhanghae.user.service.UserService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static com.everyhanghae.common.response.ResponseMessage.CREATE_USER_SUCCESS_MSG;
 import static com.everyhanghae.common.response.ResponseMessage.LOGIN_USER_SUCCESS_MSG;
+import static com.everyhanghae.common.response.ResponseMessage.CHECK_USER_EMAIL_SUCCESS_MSG;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -32,6 +34,12 @@ public class UserController {
     public Response signup(@RequestBody @Valid RequestCreateUser requestCreateUser) {
         userService.signup(requestCreateUser);
         return new Response(CREATE_USER_SUCCESS_MSG);
+    }
+
+    @PostMapping("/duplicate")
+    public Response duplicate(@RequestBody RequestDuplicateUser requestDuplicateUser) {
+        userService.duplicate(requestDuplicateUser);
+            return new Response(CHECK_USER_EMAIL_SUCCESS_MSG);
     }
 
     @ResponseBody

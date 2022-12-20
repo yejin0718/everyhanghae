@@ -1,6 +1,7 @@
 package com.everyhanghae.user.service;
 
 import com.everyhanghae.user.dto.RequestCreateUser;
+import com.everyhanghae.user.dto.RequestDuplicateUser;
 import com.everyhanghae.user.dto.RequestLoginUser;
 import com.everyhanghae.user.dto.ResponseInfoUser;
 import com.everyhanghae.user.entity.User;
@@ -62,5 +63,11 @@ public class UserService {
         httpServletResponse.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getEmail()));
 
         return responseInfoUser;
+    }
+    public void duplicate(RequestDuplicateUser requestDuplicateUser) {
+        userRepository.findByEmail(requestDuplicateUser.getEmail())
+                .ifPresent(m -> {
+                    throw new IllegalArgumentException("중복된 이메일이 존재합니다.");
+                });
     }
 }

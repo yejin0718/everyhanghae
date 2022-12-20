@@ -22,11 +22,10 @@ public enum ResponseMessage {
 
     // signup
     CREATE_USER_SUCCESS_MSG(201, "회원가입이 성공했습니다."),
+    // duplicate
+    CHECK_USER_EMAIL_SUCCESS_MSG(200, "사용 할 수 있는 이메일 입니다."),
     // login
     LOGIN_USER_SUCCESS_MSG(200, "로그인이 성공했습니다.");
-
-
-
 
     private final int status;
     private final String msg;
