@@ -6,6 +6,8 @@ const initialState = {
   contents: "",
   isLoading: false,
   error: null,
+
+  isSuccess: false,
 };
 
 //createAsyncThunk를 통해서 thunk함수 생성
@@ -17,7 +19,8 @@ export const __addContents = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await instance.post(`boards`, payload);
-      return thunkAPI.fulfillWithValue(data.data.msg); //fulfillWithValue : 네트워크 요청이 성공한 경우, dispatch함. 인자로 payload를 넘겨줄 수 있음
+      //console.log("__addContents", data);
+      return thunkAPI.fulfillWithValue(data.data); //fulfillWithValue : 네트워크 요청이 성공한 경우, dispatch함. 인자로 payload를 넘겨줄 수 있음
     } catch (error) {
       return thunkAPI.rejectWithValue(error); //rejectWithValue : 네트워크 요청이 실패한 경우, dispatch함. 인자로 payload를 넘겨줄 수 있음
     }
@@ -38,7 +41,7 @@ export const addContentsSlice = createSlice({
       //console.log("msg", action.payload);
       state.isLoading = false; // 네트워크 요청이 끝났으니, false로 변경합니다.
       state.contents = { ...state, contents: action.payload }; // Store에 있는 contents에 서버에서 가져온 contents를 넣습니다.
-      //alert(action.payload);
+      state.isSuccess = true;
     },
     [__addContents.rejected]: (state, action) => {
       state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
