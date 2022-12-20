@@ -31,15 +31,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-color: var(--color-box);
+  border: 1px solid var(--color-box);
   background: var(--color-box);
   color: white;
   font-weight: 500;
+  border-radius: 10px;
+  font-size: 1rem;
 }
 .idCheckBtn:hover {
-  border-color: var(--color-box);
-  background: var(--color-box);
-  color: white;
+  cursor: pointer;
 }
 
 .inputArea .input {
