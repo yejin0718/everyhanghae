@@ -17,7 +17,7 @@ const AddWrite = () => {
 
   //모달창 State
   const [modal, setModal] = useState(false);
-  //Input 값 State
+  //Input value State
   const [contentsValue, setContentsValue] = useState({
     title: "",
     contents: "",
