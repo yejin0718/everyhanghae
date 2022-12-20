@@ -5,6 +5,7 @@ import static com.everyhanghae.shared.exception.ExceptionMessage.NO_EXIST_BOARD_
 import static com.everyhanghae.shared.exception.ExceptionMessage.NO_EXIST_USER_EXCEPTION_MSG;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -28,72 +29,72 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class BoardService {
 
-	private final BoardRepository boardRepository;
-	private final BoardMapper boardMapper;
-	private final UserRepository userRepository;
-	private final BoardLikeRepository boardLikeRepository;
-	private final CommentRepository commentRepository;
+    private final BoardRepository boardRepository;
+    private final BoardMapper boardMapper;
+    private final UserRepository userRepository;
+    private final BoardLikeRepository boardLikeRepository;
+    private final CommentRepository commentRepository;
 
-	@Transactional
-	public ResponseBoard createBoard(RequestCreateBoard requestDto, String email) {
-		User user = checkUser(email);
+    @Transactional
+    public ResponseBoard createBoard(RequestCreateBoard requestDto, String email) {
+        User user = checkUserExists(email);
 
-		Board board = boardMapper.toBoard(requestDto, user);
-		Board savedBoard = boardRepository.save(board);
+        Board board = boardMapper.toBoard(requestDto, user);
+        Board savedBoard = boardRepository.save(board);
 
-		return boardMapper.toResponse(savedBoard);
-	}
+        return boardMapper.toResponse(savedBoard);
+    }
 
-	@Transactional(readOnly = true)
-	public List<ResponseBoardListItem> findAllBoards() {
-		List<Board> boardList = boardRepository.findAll();
-		List<ResponseBoardListItem> listResponseBoardItemList = boardList.stream()
-			.map(e -> boardMapper.toListResponseItem(e))
-			.collect(Collectors.toList());
+    @Transactional(readOnly = true)
+    public List<ResponseBoardListItem> findAllBoards() {
+        List<Board> boardList = boardRepository.findAll();
+        List<ResponseBoardListItem> listResponseBoardItemList = boardList.stream()
+                .map(e -> boardMapper.toListResponseItem(e))
+                .collect(Collectors.toList());
 
-		return listResponseBoardItemList;
-	}
+        return listResponseBoardItemList;
+    }
 
-	@Transactional(readOnly = true)
-	public ResponseBoard findBoard(Long boardId) {
-		Board board = checkBoard(boardId);
-		return boardMapper.toResponse(board);
-	}
+    @Transactional(readOnly = true)
+    public ResponseBoard findBoard(Long boardId) {
+        Board board = checkBoardExists(boardId);
+        return boardMapper.toResponse(board);
+    }
 
-	@Transactional
-	public ResponseBoard updateBoard(Long boardId, RequestUpdateBoard requestDto, String email) {
-		User user = checkUser(email);
-		Board board = checkBoard(boardId);
-		if (board.getUserId() != user.getUserId()) {
-			throw new IllegalArgumentException(NOT_AUTHOR_USER_EXCEPTION_MSG.getMsg());
-		}
+    @Transactional
+    public ResponseBoard updateBoard(Long boardId, RequestUpdateBoard requestDto, String email) {
+        User user = checkUserExists(email);
+        Board board = checkBoardExists(boardId);
+        if (board.getUserId() != user.getUserId()) {
+            throw new IllegalArgumentException(NOT_AUTHOR_USER_EXCEPTION_MSG.getMsg());
+        }
 
-		board.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getCategory());
-		return boardMapper.toResponse(board);
-	}
+        board.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getCategory());
+        return boardMapper.toResponse(board);
+    }
 
-	@Transactional
-	public void deleteBoard(Long boardId, String email) {
-		User user = checkUser(email);
-		Board board = checkBoard(boardId);
-		if (board.getUserId() != user.getUserId()) {
-			throw new IllegalArgumentException(NOT_AUTHOR_USER_EXCEPTION_MSG.getMsg());
-		}
+    @Transactional
+    public void deleteBoard(Long boardId, String email) {
+        User user = checkUserExists(email);
+        Board board = checkBoardExists(boardId);
+        if (board.getUserId() != user.getUserId()) {
+            throw new IllegalArgumentException(NOT_AUTHOR_USER_EXCEPTION_MSG.getMsg());
+        }
 
-		commentRepository.deleteAllByIdInQuery(boardId);
-		boardLikeRepository.deleteAllByIdInQuery(boardId);
-		boardRepository.deleteAllByIdInQuery(boardId);
-	}
+        commentRepository.deleteAllByIdInQuery(boardId);
+        boardLikeRepository.deleteAllByIdInQuery(boardId);
+        boardRepository.deleteAllByIdInQuery(boardId);
+    }
 
-	private User checkUser(String email){
-		return userRepository.findByEmail(email)
-			.orElseThrow(() -> new IllegalArgumentException( NO_EXIST_USER_EXCEPTION_MSG.getMsg()));
-	}
+    private User checkUserExists(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new NoSuchElementException(NO_EXIST_USER_EXCEPTION_MSG.getMsg()));
+    }
 
-	private Board checkBoard(Long id){
-		return boardRepository.findById(id)
-			.orElseThrow(() -> new IllegalArgumentException(NO_EXIST_BOARD_EXCEPTION_MSG.getMsg()));
-	}
+    private Board checkBoardExists(Long id) {
+        return boardRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException(NO_EXIST_BOARD_EXCEPTION_MSG.getMsg()));
+    }
 
 
 }
