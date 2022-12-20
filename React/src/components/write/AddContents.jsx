@@ -26,6 +26,7 @@ const AddWrite = () => {
     isValidTitle: true,
     isValidContnts: true,
   });
+  console.log("contentsValue :", contentsValue);
   //상태값과 데이터를 읽어오는 타이밍이 다를 수 있음 -> useEffect를 통해서 재렌더링함
   // useEffect(() => {
   //   if (contents.contents === "" || contents.contents === undefined) {
@@ -62,7 +63,7 @@ const AddWrite = () => {
       });
     }
   };
-  //console.log("contentsInput :", contents);
+
   const onSubmitInputValueHandler = (event) => {
     event.preventDefault();
     //보낼 데이터

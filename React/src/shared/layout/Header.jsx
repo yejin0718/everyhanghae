@@ -8,13 +8,10 @@ const Header = () => {
   const [token, setToken] = useState(localStorage.getItem("id"));
 
   const onClickLogoutButtonHandler = () => {
-    localStorage.removeItem("id");
-    setToken(token);
+    setToken(localStorage.removeItem("id"));
   };
 
-  useEffect(() => {
-    console.log(token);
-  }, [token]);
+  useEffect(() => {}, [token]);
 
   return (
     <div className={classes.header}>
