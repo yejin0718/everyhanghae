@@ -14,7 +14,8 @@ public enum ResponseMessage {
     DELETE_COMMENT_SUCCESS_MSG(200, "댓글 삭제를 성공했습니다."),
 
     // board
-    GET_ALL_BOARDS_SUCCESS_MSG(200, "전체 게시글 조회를 성공했습니다."),
+	GET_ALL_BOARDS_SUCCESS_MSG(200, "전체 게시글 조회를 성공했습니다."),
+	GET_BOARD_SUCCESS_MSG(200, "게시글 조회를 성공했습니다."),
     CREATE_BOARD_SUCCESS_MSG(201, "게시글 작성을 성공했습니다."),
     UPDATE_BOARD_SUCCESS_MSG(200, "게시글 수정을 성공했습니다."),
     DELETE_BOARD_SUCCESS_MSG(200, "게시글 삭제를 성공했습니다."),

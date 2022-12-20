@@ -36,7 +36,7 @@ public class BoardService {
 
 	@Transactional
 	public ResponseBoard createBoard(RequestCreateBoard requestDto, String email) {
-		User user = findUser(email);
+		User user = checkUser(email);
 
 		Board board = boardMapper.toBoard(requestDto, user);
 		Board savedBoard = boardRepository.save(board);
@@ -54,10 +54,16 @@ public class BoardService {
 		return listResponseBoardItemList;
 	}
 
+	@Transactional(readOnly = true)
+	public ResponseBoard findBoard(Long boardId) {
+		Board board = checkBoard(boardId);
+		return boardMapper.toResponse(board);
+	}
+
 	@Transactional
 	public ResponseBoard updateBoard(Long boardId, RequestUpdateBoard requestDto, String email) {
-		User user = findUser(email);
-		Board board = findBoard(boardId);
+		User user = checkUser(email);
+		Board board = checkBoard(boardId);
 		if (board.getUserId() != user.getUserId()) {
 			throw new IllegalArgumentException(NOT_AUTHOR_USER_EXCEPTION_MSG.getMsg());
 		}
@@ -68,8 +74,8 @@ public class BoardService {
 
 	@Transactional
 	public void deleteBoard(Long boardId, String email) {
-		User user = findUser(email);
-		Board board = findBoard(boardId);
+		User user = checkUser(email);
+		Board board = checkBoard(boardId);
 		if (board.getUserId() != user.getUserId()) {
 			throw new IllegalArgumentException(NOT_AUTHOR_USER_EXCEPTION_MSG.getMsg());
 		}
@@ -79,12 +85,12 @@ public class BoardService {
 		boardRepository.deleteAllByIdInQuery(boardId);
 	}
 
-	private User findUser(String email){
+	private User checkUser(String email){
 		return userRepository.findByEmail(email)
 			.orElseThrow(() -> new IllegalArgumentException( NO_EXIST_USER_EXCEPTION_MSG.getMsg()));
 	}
 
-	private Board findBoard(Long id){
+	private Board checkBoard(Long id){
 		return boardRepository.findById(id)
 			.orElseThrow(() -> new IllegalArgumentException(NO_EXIST_BOARD_EXCEPTION_MSG.getMsg()));
 	}
