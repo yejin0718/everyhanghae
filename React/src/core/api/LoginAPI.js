@@ -20,3 +20,12 @@ export const sign_in = async (post) => {
     console.log(error);
   }
 };
+
+export const duplicate_check = async (post) => {
+  try {
+    const data = await instance.post(`users/signup`, post);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
