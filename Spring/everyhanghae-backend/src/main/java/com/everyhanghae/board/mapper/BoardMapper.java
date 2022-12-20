@@ -8,6 +8,8 @@ import com.everyhanghae.board.entity.BoardCategory;
 import com.everyhanghae.comment.dto.ResponseComment;
 import com.everyhanghae.comment.entity.Comment;
 import com.everyhanghae.comment.mapper.CommentMapper;
+import com.everyhanghae.user.entity.User;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +23,7 @@ public class BoardMapper {
 
 	private final CommentMapper commentMapper;
 
-	public Board toBoard(RequestCreateBoard requestDto, Long userId) {
+	public Board toBoard(RequestCreateBoard requestDto, User user) {
 		String category = requestDto.getCategory();
 		BoardCategory boardCategory = null;
 		if (!category.isEmpty()) {
@@ -30,11 +32,11 @@ public class BoardMapper {
 
 		return Board.builder()
 			.title(requestDto.getTitle())
-			.writer(requestDto.getWriter())
+			.writer(user.getNickname())
 			.content(requestDto.getContent())
 			.category(boardCategory)
 			.likeCount(0)
-			.userId(userId)
+			.userId(user.getUserId())
 			.build();
 	}
 
