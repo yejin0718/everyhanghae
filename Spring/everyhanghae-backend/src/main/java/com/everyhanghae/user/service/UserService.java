@@ -1,6 +1,7 @@
 package com.everyhanghae.user.service;
 
 import com.everyhanghae.user.dto.RequestCreateUser;
+import com.everyhanghae.user.dto.RequestDuplicateUser;
 import com.everyhanghae.user.dto.RequestLoginUser;
 import com.everyhanghae.user.dto.ResponseInfoUser;
 import com.everyhanghae.user.entity.User;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -62,5 +64,14 @@ public class UserService {
         httpServletResponse.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getEmail()));
 
         return responseInfoUser;
+    }
+
+    public boolean duplicate(RequestDuplicateUser requestDuplicateUser) {
+        boolean emailDuplicate = true;
+        Optional<User> user = userRepository.findByEmail(requestDuplicateUser.getEmail());
+        if(user.isPresent()){
+            emailDuplicate = false;
+        }
+        return emailDuplicate;
     }
 }
