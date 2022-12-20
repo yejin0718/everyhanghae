@@ -3,6 +3,7 @@ package com.everyhanghae.board.controller;
 import static com.everyhanghae.common.response.ResponseMessage.CREATE_BOARD_SUCCESS_MSG;
 import static com.everyhanghae.common.response.ResponseMessage.DELETE_BOARD_SUCCESS_MSG;
 import static com.everyhanghae.common.response.ResponseMessage.GET_ALL_BOARDS_SUCCESS_MSG;
+import static com.everyhanghae.common.response.ResponseMessage.GET_BOARD_SUCCESS_MSG;
 import static com.everyhanghae.common.response.ResponseMessage.UPDATE_BOARD_SUCCESS_MSG;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.everyhanghae.board.entity.Board;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,6 +54,13 @@ public class BoardController {
 	public DataResponse<List<ResponseBoardListItem>> readAllBoards() {
 		List<ResponseBoardListItem> response = boardService.findAllBoards();
 		return new DataResponse<>(GET_ALL_BOARDS_SUCCESS_MSG, response);
+	}
+
+	@GetMapping("/{boardId}")
+	public ResponseEntity<DataResponse<ResponseBoard>> readBoard(@PathVariable Long boardId) {
+		ResponseBoard responseData = boardService.findBoard(boardId);
+		DataResponse<ResponseBoard> response = new DataResponse<>(GET_BOARD_SUCCESS_MSG, responseData);
+		return new ResponseEntity<>(response, OK);
 	}
 
 	@PatchMapping("/{boardId}")
