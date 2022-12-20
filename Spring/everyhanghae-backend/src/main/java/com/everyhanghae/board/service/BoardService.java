@@ -1,5 +1,7 @@
 package com.everyhanghae.board.service;
 
+import static com.everyhanghae.common.exception.ExceptionMessage.NOT_AUTHOR_USER_EXCEPTION_MSG;
+import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_BOARD_EXCEPTION_MSG;
 import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_USER_EXCEPTION_MSG;
 
 import java.util.List;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.everyhanghae.board.dto.RequestCreateBoard;
+import com.everyhanghae.board.dto.RequestUpdateBoard;
 import com.everyhanghae.board.dto.ResponseBoard;
 import com.everyhanghae.board.dto.ResponseBoardListItem;
 import com.everyhanghae.board.entity.Board;
@@ -29,7 +32,6 @@ public class BoardService {
 
 	@Transactional
 	public ResponseBoard createBoard(RequestCreateBoard requestDto, String email) {
-		// 유저 정보 가져오는 로직 추가 필요
 		User user = findUser(email);
 
 		Board board = boardMapper.toBoard(requestDto, user);
@@ -48,9 +50,26 @@ public class BoardService {
 		return listResponseBoardItemList;
 	}
 
+	@Transactional
+	public ResponseBoard updateBoard(Long boardId, RequestUpdateBoard requestDto, String email) {
+		User user = findUser(email);
+		Board board = findBoard(boardId);
+		if (board.getUserId() != user.getUserId()) {
+			throw new IllegalArgumentException(NOT_AUTHOR_USER_EXCEPTION_MSG.getMsg());
+		}
+
+		board.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getCategory());
+		return boardMapper.toResponse(board);
+	}
+
 	private User findUser(String email){
 		return userRepository.findByEmail(email)
 			.orElseThrow(() -> new IllegalArgumentException( NO_EXIST_USER_EXCEPTION_MSG.getMsg()));
+	}
+
+	private Board findBoard(Long id){
+		return boardRepository.findById(id)
+			.orElseThrow(() -> new IllegalArgumentException(NO_EXIST_BOARD_EXCEPTION_MSG.getMsg()));
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.everyhanghae.board.controller.BoardController;
@@ -31,6 +32,13 @@ public class BoardExceptionHandler {
 			exceptionResponse = new ExceptionResponse(exceptionMessage);
 		}
 
+		return new ResponseEntity<>(exceptionResponse, BAD_REQUEST);
+	}
+
+	@ResponseStatus(BAD_REQUEST)
+	@ExceptionHandler({IllegalArgumentException.class})
+	public ResponseEntity<ExceptionResponse> handleBadRequest(IllegalArgumentException e) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(BAD_REQUEST.value(), e.getMessage());
 		return new ResponseEntity<>(exceptionResponse, BAD_REQUEST);
 	}
 

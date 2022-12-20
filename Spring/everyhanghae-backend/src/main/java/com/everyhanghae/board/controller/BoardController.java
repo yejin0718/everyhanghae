@@ -2,18 +2,25 @@ package com.everyhanghae.board.controller;
 
 import static com.everyhanghae.common.response.ResponseMessage.CREATE_BOARD_SUCCESS_MSG;
 import static com.everyhanghae.common.response.ResponseMessage.GET_ALL_BOARDS_SUCCESS_MSG;
+import static com.everyhanghae.common.response.ResponseMessage.UPDATE_BOARD_SUCCESS_MSG;
+import static org.springframework.http.HttpStatus.OK;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.everyhanghae.board.dto.RequestUpdateBoard;
 import com.everyhanghae.board.dto.ResponseBoardListItem;
 import com.everyhanghae.board.dto.RequestCreateBoard;
 import com.everyhanghae.board.dto.ResponseBoard;
@@ -34,9 +41,7 @@ public class BoardController {
 
 	@PostMapping
 	public DataResponse<ResponseBoard> writeBoard(@Valid @RequestBody RequestCreateBoard requestDto, HttpServletRequest servletRequest) {
-		Claims claims = jwtService.getTokenClaim(servletRequest);
-		String email = claims.getSubject();
-
+		String email = resolveEmailInToken(servletRequest);
 		ResponseBoard response = boardService.createBoard(requestDto, email);
 		return new DataResponse<>(CREATE_BOARD_SUCCESS_MSG, response);
 	}
@@ -45,6 +50,19 @@ public class BoardController {
 	public DataResponse<List<ResponseBoardListItem>> readAllBoards() {
 		List<ResponseBoardListItem> response = boardService.findAllBoards();
 		return new DataResponse<>(GET_ALL_BOARDS_SUCCESS_MSG, response);
+	}
+
+	@PatchMapping("/{boardId}")
+	public ResponseEntity<DataResponse<ResponseBoard>> editBoard(@PathVariable Long boardId, @Valid @RequestBody RequestUpdateBoard requestDto, HttpServletRequest servletRequest) {
+		String email = resolveEmailInToken(servletRequest);
+		ResponseBoard responseData = boardService.updateBoard(boardId, requestDto, email);
+		DataResponse<ResponseBoard> response = new DataResponse<>(UPDATE_BOARD_SUCCESS_MSG, responseData);
+		return new ResponseEntity<>(response, OK);
+	}
+
+	private String resolveEmailInToken(HttpServletRequest servletRequest) {
+		Claims claims = jwtService.getTokenClaim(servletRequest);
+		return claims.getSubject();
 	}
 
 }
