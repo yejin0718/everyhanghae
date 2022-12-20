@@ -8,20 +8,23 @@ import com.everyhanghae.domain.comment.entity.Comment;
 import com.everyhanghae.domain.comment.mapper.CommentMapper;
 import com.everyhanghae.domain.comment.repository.CommentRepository;
 import com.everyhanghae.domain.user.entity.User;
-import com.everyhanghae.security.jwt.JwtUtil;
 import com.everyhanghae.domain.user.repository.UserRepository;
+import com.everyhanghae.security.jwt.JwtUtil;
+
 import io.jsonwebtoken.Claims;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.everyhanghae.shared.exception.ExceptionMessage.NOT_AUTHOR_USER_EXCEPTION_MSG;
 import static com.everyhanghae.shared.exception.ExceptionMessage.NO_EXIST_BOARD_EXCEPTION_MSG;
 import static com.everyhanghae.shared.exception.ExceptionMessage.NO_EXIST_COMMENT_EXCEPTION_MSG;
 import static com.everyhanghae.shared.exception.ExceptionMessage.NO_EXIST_USER_EXCEPTION_MSG;
 import static com.everyhanghae.shared.exception.ExceptionMessage.TOKEN_ERROR_EXCEPTION_MSG;
-import static com.everyhanghae.shared.exception.ExceptionMessage.WRONG_COMMENT_WRITER_EXCEPTION;
 
 @RequiredArgsConstructor
 @Service
@@ -98,12 +101,10 @@ public class CommentService {
     }
 
 
-
-
     /*
      * board확인
      */
-    private Board checkBoard(Long id){
+    private Board checkBoard(Long id) {
         return boardRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException(NO_EXIST_BOARD_EXCEPTION_MSG.getMsg())
         );
@@ -112,7 +113,7 @@ public class CommentService {
     /*
      * comment확인
      */
-    private Comment checkComment(Long id){
+    private Comment checkComment(Long id) {
         return commentRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException(NO_EXIST_COMMENT_EXCEPTION_MSG.getMsg())
         );
@@ -121,7 +122,7 @@ public class CommentService {
     /*
      * token확인
      */
-    private Claims checkToken(String token){
+    private Claims checkToken(String token) {
         if (token != null) {
             if (jwtUtil.validateToken(token)) {//유효한 토큰인지 검사
                 return claims = jwtUtil.getUserInfoFromToken(token);// 토큰에서 사용자 정보 가져오기
@@ -135,7 +136,7 @@ public class CommentService {
     /*
      * user찾기
      */
-    private User findUser(){
+    private User findUser() {
         return userRepository.findByEmail(claims.getSubject()).orElseThrow(
                 () -> new IllegalArgumentException(NO_EXIST_USER_EXCEPTION_MSG.getMsg())
         );
@@ -144,11 +145,11 @@ public class CommentService {
     /*
      * user확인
      */
-    private void checkUser(String commentUser, String requestUser){
+    private void checkUser(String commentUser, String requestUser) {
         System.out.println("commentUser = " + commentUser);
         System.out.println("requestUser = " + requestUser);
-        if(!commentUser.equals(requestUser)){
-            throw new IllegalArgumentException(WRONG_COMMENT_WRITER_EXCEPTION.getMsg());
+        if (!commentUser.equals(requestUser)) {
+            throw new IllegalArgumentException(NOT_AUTHOR_USER_EXCEPTION_MSG.getMsg());
         }
     }
 
