@@ -17,6 +17,8 @@ import com.everyhanghae.board.dto.ResponseBoardListItem;
 import com.everyhanghae.board.entity.Board;
 import com.everyhanghae.board.mapper.BoardMapper;
 import com.everyhanghae.board.repository.BoardRepository;
+import com.everyhanghae.board_like.Repository.BoardLikeRepository;
+import com.everyhanghae.comment.repository.CommentRepository;
 import com.everyhanghae.user.entity.User;
 import com.everyhanghae.user.repository.UserRepository;
 
@@ -29,6 +31,8 @@ public class BoardService {
 	private final BoardRepository boardRepository;
 	private final BoardMapper boardMapper;
 	private final UserRepository userRepository;
+	private final BoardLikeRepository boardLikeRepository;
+	private final CommentRepository commentRepository;
 
 	@Transactional
 	public ResponseBoard createBoard(RequestCreateBoard requestDto, String email) {
@@ -70,7 +74,9 @@ public class BoardService {
 			throw new IllegalArgumentException(NOT_AUTHOR_USER_EXCEPTION_MSG.getMsg());
 		}
 
-		boardRepository.delete(board);
+		commentRepository.deleteAllByIdInQuery(boardId);
+		boardLikeRepository.deleteAllByIdInQuery(boardId);
+		boardRepository.deleteAllByIdInQuery(boardId);
 	}
 
 	private User findUser(String email){
