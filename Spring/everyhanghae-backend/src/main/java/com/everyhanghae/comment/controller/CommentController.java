@@ -33,8 +33,8 @@ public class CommentController {
      * 댓글 수정
      */
     @PutMapping("/{commentId}")
-    public DataResponse<ResponseComment> editComment(@PathVariable Long boardId, @PathVariable Long commentId, @RequestBody RequestComment requestDto){
-        ResponseComment responseComment = commentService.editComment(boardId, commentId, requestDto);
+    public DataResponse<ResponseComment> editComment(@PathVariable Long boardId, @PathVariable Long commentId, @RequestBody RequestComment requestDto, HttpServletRequest request){
+        ResponseComment responseComment = commentService.editComment(boardId, commentId, requestDto, request);
         return new DataResponse<>(UPDATE_COMMENT_SUCCESS_MSG, responseComment);
     }
 

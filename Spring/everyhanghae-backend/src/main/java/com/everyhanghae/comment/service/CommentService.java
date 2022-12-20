@@ -38,9 +38,10 @@ public class CommentService {
     @Transactional
     public ResponseComment createComment(Long id, RequestComment requestDto, HttpServletRequest request) {
 
-        String token = jwtUtil.resolveToken(request);       //request에서 token 가져오기
-        claims = checkToken(token);         //토큰 확인
-        findUser();         //유저 확인
+        /* 로그인 확인 */
+        String token = jwtUtil.resolveToken(request);
+        claims = checkToken(token);
+        findUser();
 
         //board있는지 확인
         Board board = checkBoard(id);
@@ -56,12 +57,15 @@ public class CommentService {
      * 댓글 수정
      */
     @Transactional
-    public ResponseComment editComment(Long boardId, Long commentId, RequestComment requestDto) {
+    public ResponseComment editComment(Long boardId, Long commentId, RequestComment requestDto, HttpServletRequest request) {
 
-        //수정한 댓글 변수에 담기
+        /* 수정한 댓글 변수에 담기 */
         String editComment = requestDto.getComment();
 
-        //유저 확인(추가 예정)
+        /* 로그인 확인 */
+        String token = jwtUtil.resolveToken(request);
+        claims = checkToken(token);
+        findUser();
 
         //게시글 확인
         checkBoard(boardId);
