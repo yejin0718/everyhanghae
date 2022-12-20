@@ -1,6 +1,7 @@
 package com.everyhanghae.board.controller;
 
 import static com.everyhanghae.common.response.ResponseMessage.CREATE_BOARD_SUCCESS_MSG;
+import static com.everyhanghae.common.response.ResponseMessage.DELETE_BOARD_SUCCESS_MSG;
 import static com.everyhanghae.common.response.ResponseMessage.GET_ALL_BOARDS_SUCCESS_MSG;
 import static com.everyhanghae.common.response.ResponseMessage.UPDATE_BOARD_SUCCESS_MSG;
 import static org.springframework.http.HttpStatus.OK;
@@ -10,8 +11,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,12 +21,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.everyhanghae.board.dto.RequestUpdateBoard;
-import com.everyhanghae.board.dto.ResponseBoardListItem;
 import com.everyhanghae.board.dto.RequestCreateBoard;
+import com.everyhanghae.board.dto.RequestUpdateBoard;
 import com.everyhanghae.board.dto.ResponseBoard;
+import com.everyhanghae.board.dto.ResponseBoardListItem;
 import com.everyhanghae.board.service.BoardService;
 import com.everyhanghae.common.response.DataResponse;
+import com.everyhanghae.common.response.Response;
 import com.everyhanghae.user.jwt.JwtService;
 
 import io.jsonwebtoken.Claims;
@@ -57,6 +59,14 @@ public class BoardController {
 		String email = resolveEmailInToken(servletRequest);
 		ResponseBoard responseData = boardService.updateBoard(boardId, requestDto, email);
 		DataResponse<ResponseBoard> response = new DataResponse<>(UPDATE_BOARD_SUCCESS_MSG, responseData);
+		return new ResponseEntity<>(response, OK);
+	}
+
+	@DeleteMapping("/{boardId}")
+	public ResponseEntity<Response> removeBoard(@PathVariable Long boardId, HttpServletRequest servletRequest) {
+		String email = resolveEmailInToken(servletRequest);
+		boardService.deleteBoard(boardId, email);
+		Response response = new Response(DELETE_BOARD_SUCCESS_MSG);
 		return new ResponseEntity<>(response, OK);
 	}
 
