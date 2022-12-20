@@ -5,17 +5,20 @@ import com.everyhanghae.board.entity.Board;
 import com.everyhanghae.board.repository.BoardRepository;
 import com.everyhanghae.board_like.entity.BoardLike;
 import com.everyhanghae.board_like.Repository.BoardLikeRepository;
+
 import com.everyhanghae.user.entity.User;
 import com.everyhanghae.user.repository.UserRepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_COMMENT_EXCEPTION_MSG;
-import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_USER_EXCEPTION_MSG;
 
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
+
+import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_BOARD_EXCEPTION_MSG;
+import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_USER_EXCEPTION_MSG;
+
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +37,7 @@ public class BoardLikeService {
         );
 
         Board board = boardRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException(NO_EXIST_COMMENT_EXCEPTION_MSG.getMsg())
+                () -> new IllegalArgumentException(NO_EXIST_BOARD_EXCEPTION_MSG.getMsg())
         );
 
         Optional<BoardLike> like = boardLikeRepository.findBoardLikeByBoardIdAndUserId(board, user.getUserId());
