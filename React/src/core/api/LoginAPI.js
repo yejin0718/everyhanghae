@@ -14,7 +14,7 @@ export const sign_up = async (post) => {
 export const sign_in = async (post) => {
   try {
     const data = await instance.post(`users/login`, post);
-    //console.log("data", data);
+    console.log("data", data.data.msg);
     return data;
   } catch (error) {
     console.log(error);

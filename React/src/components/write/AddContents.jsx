@@ -12,8 +12,8 @@ const AddWrite = () => {
   const categoryOption = ["", "BE", "FE", "FREE", "SECRET"];
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const { contents } = useSelector((state) => state.contents);
-  // console.log("contents :", contents.contents);
+  const { isSuccess } = useSelector((state) => state.contents);
+  console.log("isSuccess :", isSuccess);
 
   //모달창 State
   const [modal, setModal] = useState(false);
@@ -91,12 +91,12 @@ const AddWrite = () => {
   };
   const alertHandler = () => {
     setModal(false);
-    navigate("/");
+    // navigate("/");
   };
 
   return (
     <div>
-      {modal ? (
+      {isSuccess && modal ? (
         <AlertModal onAlert={alertHandler} />
       ) : (
         <form className={classes.wrap} onSubmit={onSubmitInputValueHandler}>

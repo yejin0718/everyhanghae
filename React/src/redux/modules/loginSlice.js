@@ -16,7 +16,7 @@ export const __signup = createAsyncThunk(
     console.log("__signup payload :", payload);
     try {
       const data = await instance.post(`users/signup`, payload);
-      //console.log("data :", data.data);
+      //console.log("data :", data);
       return thunkAPI.fulfillWithValue(data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

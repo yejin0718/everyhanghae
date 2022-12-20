@@ -9,16 +9,16 @@ const SignUp = () => {
   const navigate = useNavigate();
   const generationOption = [
     "--선택해주세요--",
-    "1기",
-    "2기",
-    "3기",
-    "4기",
-    "5기",
-    "6기",
-    "7기",
-    "8기",
-    "9기",
-    "10기",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
   ];
 
   //상태값
@@ -97,11 +97,15 @@ const SignUp = () => {
           nickname: loginValue.nickname,
           generation: parseInt(loginValue.generation),
         };
-        sign_up(newLoginValue).then((res) => {
-          console.log(res);
-          setDuplicateCheck(false);
-          navigate(`/login`);
-        });
+        sign_up(newLoginValue)
+          .then((res) => {
+            console.log(res);
+            setDuplicateCheck(false);
+            navigate(`/login`);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     }
   };
@@ -191,7 +195,7 @@ const SignUp = () => {
             >
               {generationOption.map((item, index) => (
                 <option key={index} value={item}>
-                  {item}
+                  {item}기
                 </option>
               ))}
             </select>

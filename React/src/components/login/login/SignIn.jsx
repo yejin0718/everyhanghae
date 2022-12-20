@@ -46,7 +46,10 @@ const SignIn = () => {
       sign_in(newLoginValue)
         .then((res) => {
           console.log(res);
+          alert(res.data.msg);
           localStorage.setItem("id", res.headers.authorization);
+          localStorage.setItem("nickname", res.data.data.nickname);
+          localStorage.setItem("generation", res.data.data.generation);
           navigate("/");
         })
         .catch((error) => {
