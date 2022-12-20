@@ -7,25 +7,40 @@ import com.everyhanghae.comment.dto.ResponseComment;
 import com.everyhanghae.comment.entity.Comment;
 import com.everyhanghae.comment.mapper.CommentMapper;
 import com.everyhanghae.comment.repository.CommentRepository;
+import com.everyhanghae.user.entity.User;
+import com.everyhanghae.user.jwt.JwtUtil;
+import com.everyhanghae.user.repository.UserRepository;
+import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_BOARD_EXCEPTION_MSG;
 import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_COMMENT_EXCEPTION_MSG;
+import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_USER_EXCEPTION_MSG;
+import static com.everyhanghae.common.exception.ExceptionMessage.TOKEN_ERROR_EXCEPTION_MSG;
 
 @RequiredArgsConstructor
 @Service
 public class CommentService {
-
     private final BoardRepository boardRepository;
     private final CommentRepository commentRepository;
+    private final UserRepository userRepository;
     private final CommentMapper commentMapper;
+    private final JwtUtil jwtUtil;
+    Claims claims = null;
 
-    //댓글 작성
+    /*
+     * 댓글 작성
+     */
     @Transactional
-    public ResponseComment createComment(Long id, RequestComment requestDto) {
-        //유저 확인(추가 예정)
+    public ResponseComment createComment(Long id, RequestComment requestDto, HttpServletRequest request) {
+
+        String token = jwtUtil.resolveToken(request);       //request에서 token 가져오기
+        claims = checkToken(token);         //토큰 확인
+        findUser();         //유저 확인
 
         //board있는지 확인
         Board board = checkBoard(id);
@@ -37,7 +52,9 @@ public class CommentService {
         return new ResponseComment(id, comment);
     }
 
-    //댓글 수정
+    /*
+     * 댓글 수정
+     */
     @Transactional
     public ResponseComment editComment(Long boardId, Long commentId, RequestComment requestDto) {
 
@@ -56,7 +73,9 @@ public class CommentService {
         return new ResponseComment(boardId, comment);
     }
 
-    //댓글 삭제
+    /*
+     * 댓글 삭제
+     */
     @Transactional
     public void deleteComment(Long boardId, Long commentId) {
         //유저 확인(추가 예정)
@@ -67,8 +86,6 @@ public class CommentService {
         //댓글 확인
         Comment comment = checkComment(commentId);
 
-        //유저 권한 체크(추가 예정)
-
         //댓글 삭제
         commentRepository.delete(comment);
 
@@ -77,17 +94,44 @@ public class CommentService {
 
 
 
-    //board확인
+    /*
+     * board확인
+     */
     private Board checkBoard(Long id){
         return boardRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException(NO_EXIST_BOARD_EXCEPTION_MSG.getMsg())
         );
     }
 
-    //comment확인
+    /*
+     * comment확인
+     */
     private Comment checkComment(Long id){
         return commentRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException(NO_EXIST_COMMENT_EXCEPTION_MSG.getMsg())
+        );
+    }
+
+    /*
+     * token확인
+     */
+    private Claims checkToken(String token){
+        if (token != null) {
+            if (jwtUtil.validateToken(token)) {//유효한 토큰인지 검사
+                return claims = jwtUtil.getUserInfoFromToken(token);// 토큰에서 사용자 정보 가져오기
+            } else {//유효한 토큰이 아니면
+                throw new IllegalArgumentException(String.valueOf(TOKEN_ERROR_EXCEPTION_MSG)); //토큰 에러 메세지 출력
+            }
+        }
+        return claims;
+    }
+
+    /*
+     * user찾기
+     */
+    private User findUser(){
+        return userRepository.findByEmail(claims.getSubject()).orElseThrow(
+                () -> new IllegalArgumentException(String.valueOf(NO_EXIST_USER_EXCEPTION_MSG))
         );
     }
 
