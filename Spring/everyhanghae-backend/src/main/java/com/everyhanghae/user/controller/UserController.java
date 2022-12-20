@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @PostMapping("/duplicate")
-    public Response duplicate(@RequestBody RequestDuplicateUser requestDuplicateUser) {
+    public Response duplicate(@RequestBody @Valid RequestDuplicateUser requestDuplicateUser) {
         userService.duplicate(requestDuplicateUser);
             return new Response(CHECK_USER_EMAIL_SUCCESS_MSG);
     }
