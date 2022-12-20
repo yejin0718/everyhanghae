@@ -41,13 +41,13 @@ public class CommentService {
         /* 로그인 확인 */
         String token = jwtUtil.resolveToken(request);
         claims = checkToken(token);
-        findUser();
+        User user = findUser();
 
         //board있는지 확인
         Board board = checkBoard(id);
 
         //댓글 저장
-        Comment comment = commentMapper.toDepthZeroComment(board, requestDto);
+        Comment comment = commentMapper.toDepthZeroComment(board, requestDto, user.getUserId());
         commentRepository.save(comment);
 
         return new ResponseComment(id, comment);
@@ -65,7 +65,11 @@ public class CommentService {
         /* 로그인 확인 */
         String token = jwtUtil.resolveToken(request);
         claims = checkToken(token);
-        findUser();
+        User user = findUser();
+        System.out.println("user.getUserId() = " + user.getUserId());
+        System.out.println("user.getPassword() = " + user.getPassword());
+        System.out.println("user.getEmail() = " + user.getEmail());
+        System.out.println("user.getNickname() = " + user.getNickname());
 
         //게시글 확인
         checkBoard(boardId);
