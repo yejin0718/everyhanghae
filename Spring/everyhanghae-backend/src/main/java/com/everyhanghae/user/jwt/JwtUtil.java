@@ -60,6 +60,19 @@ public class JwtUtil {
                         .compact();
     }
 
+    public String createToken(JwtPayload payload) {
+        Date date = new Date();
+
+        return BEARER_PREFIX +
+            Jwts.builder()
+                .setSubject(payload.getSubject())
+                .claim(AUTHORIZATION_KEY, payload.getUserRole().name())
+                .setExpiration(new Date(date.getTime() + TOKEN_TIME))
+                .setIssuedAt(date)
+                .signWith(key, signatureAlgorithm)
+                .compact();
+    }
+
     // 토큰 검증
     public boolean validateToken(String token) {
         try {
