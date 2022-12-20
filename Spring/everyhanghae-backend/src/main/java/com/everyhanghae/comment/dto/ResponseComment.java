@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 public class ResponseComment {
 
     private Long boardId;
+    private Long commentId;
 
     private String username;
 
@@ -19,6 +20,7 @@ public class ResponseComment {
 
     public ResponseComment(Long id, Comment comment){
         this.boardId = id;
+        this.commentId = comment.getCommentId();
         this.username = comment.getWriter();
         this.comment = comment.getContent();
         this.createdAt = comment.getCreatedAt();

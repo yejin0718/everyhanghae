@@ -27,9 +27,13 @@ public class User {
     @Column(nullable = false)
     private String nickname;
 
-    public User(String email, String password, String nickname) {
+    @Column(nullable = false)
+    private int generation;
+
+    public User(String email, String password, String nickname, int generation) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
+        this.generation = generation;
     }
 }

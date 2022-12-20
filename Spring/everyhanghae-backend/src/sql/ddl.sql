@@ -4,7 +4,6 @@ CREATE TABLE everyhanghae.users
     email     VARCHAR(50) NOT NULL UNIQUE,
     nickname  VARCHAR(20) NOT NULL,
     password  VARCHAR(50) NOT NULL,
-    user_role VARCHAR(20) NOT NULL,
     PRIMARY KEY (user_id)
 ) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 

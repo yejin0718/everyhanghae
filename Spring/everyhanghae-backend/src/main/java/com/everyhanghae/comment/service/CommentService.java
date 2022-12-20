@@ -21,6 +21,7 @@ import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_BOARD_
 import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_COMMENT_EXCEPTION_MSG;
 import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_USER_EXCEPTION_MSG;
 import static com.everyhanghae.common.exception.ExceptionMessage.TOKEN_ERROR_EXCEPTION_MSG;
+import static com.everyhanghae.common.exception.ExceptionMessage.WRONG_COMMENT_WRITER_EXCEPTION;
 
 @RequiredArgsConstructor
 @Service
@@ -41,13 +42,13 @@ public class CommentService {
         /* 로그인 확인 */
         String token = jwtUtil.resolveToken(request);
         claims = checkToken(token);
-        findUser();
+        User user = findUser();
 
-        //board있는지 확인
+        /* board 있는지 확인 */
         Board board = checkBoard(id);
 
-        //댓글 저장
-        Comment comment = commentMapper.toDepthZeroComment(board, requestDto);
+        /* 댓글 저장 */
+        Comment comment = commentMapper.toDepthZeroComment(board, requestDto, user.getUserId());
         commentRepository.save(comment);
 
         return new ResponseComment(id, comment);
@@ -72,6 +73,7 @@ public class CommentService {
 
         //댓글 확인, 수정
         Comment comment = checkComment(commentId);
+        checkUser(comment.getWriter(), requestDto.getUsername());
         comment.update(editComment);
 
         return new ResponseComment(boardId, comment);
@@ -124,7 +126,7 @@ public class CommentService {
             if (jwtUtil.validateToken(token)) {//유효한 토큰인지 검사
                 return claims = jwtUtil.getUserInfoFromToken(token);// 토큰에서 사용자 정보 가져오기
             } else {//유효한 토큰이 아니면
-                throw new IllegalArgumentException(String.valueOf(TOKEN_ERROR_EXCEPTION_MSG)); //토큰 에러 메세지 출력
+                throw new IllegalArgumentException(TOKEN_ERROR_EXCEPTION_MSG.getMsg()); //토큰 에러 메세지 출력
             }
         }
         return claims;
@@ -135,8 +137,19 @@ public class CommentService {
      */
     private User findUser(){
         return userRepository.findByEmail(claims.getSubject()).orElseThrow(
-                () -> new IllegalArgumentException(String.valueOf(NO_EXIST_USER_EXCEPTION_MSG))
+                () -> new IllegalArgumentException(NO_EXIST_USER_EXCEPTION_MSG.getMsg())
         );
+    }
+
+    /*
+     * user확인
+     */
+    private void checkUser(String commentUser, String requestUser){
+        System.out.println("commentUser = " + commentUser);
+        System.out.println("requestUser = " + requestUser);
+        if(!commentUser.equals(requestUser)){
+            throw new IllegalArgumentException(WRONG_COMMENT_WRITER_EXCEPTION.getMsg());
+        }
     }
 
 }
