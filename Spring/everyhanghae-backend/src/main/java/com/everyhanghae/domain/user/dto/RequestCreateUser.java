@@ -5,13 +5,15 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
 public class RequestCreateUser {
 
-    @Email(message = "email 형식을 지켜주세요")
+    @NotEmpty(message = "이메일을 입력해주세요.")
+    @Email(message = "이메일 형식을 맞춰주세요.")
     private String email;
 
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!#%*?&])[A-Za-z\\d@$!#%*?&]{8,15}$",
