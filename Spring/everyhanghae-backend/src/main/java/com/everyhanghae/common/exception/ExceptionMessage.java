@@ -18,6 +18,7 @@ public enum ExceptionMessage implements ExceptionMessageConstant {
 	NO_EXIST_COMMENT_EXCEPTION_MSG(404, "댓글이 존재하지 않습니다."),
 
 	// user
+  TOKEN_ERROR_EXCEPTION_MSG(400, "Token Error"),
 	NO_EXIST_USER_EXCEPTION_MSG(404, "유저가 존재하지 않습니다."),
 	NOT_AUTHOR_USER_EXCEPTION_MSG(400, "작성자가 아닙니다.");
 
