@@ -46,6 +46,7 @@ const SignIn = () => {
       console.log(newLoginValue);
       sign_in(newLoginValue)
         .then((res) => {
+          console.log(res);
           localStorage.setItem("id", res.headers.authorization);
           navigate("/");
         })

@@ -1,3 +1,4 @@
+//리덕스 연습 Test 로그인 / 회원가입 리억스로 만들었다가 리덕스 사용 안함!
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { instance } from "./instance/instance";
 
