@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -65,13 +64,10 @@ public class UserService {
 
         return responseInfoUser;
     }
-
-    public boolean duplicate(RequestDuplicateUser requestDuplicateUser) {
-        boolean emailDuplicate = true;
-        Optional<User> user = userRepository.findByEmail(requestDuplicateUser.getEmail());
-        if(user.isPresent()){
-            emailDuplicate = false;
-        }
-        return emailDuplicate;
+    public void duplicate(RequestDuplicateUser requestDuplicateUser) {
+        userRepository.findByEmail(requestDuplicateUser.getEmail())
+                .ifPresent(m -> {
+                    throw new IllegalArgumentException("중복된 이메일이 존재합니다.");
+                });
     }
 }

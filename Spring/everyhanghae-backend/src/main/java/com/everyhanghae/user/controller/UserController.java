@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import static com.everyhanghae.common.response.ResponseMessage.CREATE_USER_SUCCESS_MSG;
 import static com.everyhanghae.common.response.ResponseMessage.LOGIN_USER_SUCCESS_MSG;
-import static com.everyhanghae.common.response.ResponseMessage.CHECK_USER_EMAIL_FAIL_MSG;
 import static com.everyhanghae.common.response.ResponseMessage.CHECK_USER_EMAIL_SUCCESS_MSG;
 
 import javax.servlet.http.HttpServletResponse;
@@ -39,12 +38,8 @@ public class UserController {
 
     @PostMapping("/duplicate")
     public Response duplicate(@RequestBody RequestDuplicateUser requestDuplicateUser) {
-        boolean duplicate = userService.duplicate(requestDuplicateUser);
-        if (duplicate) {
+        userService.duplicate(requestDuplicateUser);
             return new Response(CHECK_USER_EMAIL_SUCCESS_MSG);
-        } else {
-            return new Response(CHECK_USER_EMAIL_FAIL_MSG);
-        }
     }
 
     @ResponseBody
