@@ -35,7 +35,7 @@ public class UserService {
     private void validateDuplicateUser(RequestCreateUser requestCreateUser) {
         userRepository.findByEmail(requestCreateUser.getEmail())
                 .ifPresent(m -> {
-                    throw new IllegalStateException("중복된 이메일이 존재합니다.");
+                    throw new IllegalArgumentException("중복된 이메일이 존재합니다.");
                 });
     }
 
@@ -48,6 +48,7 @@ public class UserService {
         User user = userRepository.findByEmail(email).orElseThrow(
                 () -> new IllegalArgumentException("등록된 이메일이 없습니다.")
         );
+
         // 비밀번호 확인
         if (!user.getPassword().equals(password)) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
