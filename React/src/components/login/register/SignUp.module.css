@@ -26,17 +26,17 @@
   margin-top: 0;
   width: 75%;
 }
-.pwCheckBtn {
+.idCheckBtn {
   width: 25%;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2.4px solid var(--color-box);
-  background-color: transparent;
-  color: var(--color-box);
-  font-weight: 700;
+  border-color: var(--color-box);
+  background: var(--color-box);
+  color: white;
+  font-weight: 500;
 }
-.pwCheckBtn:hover {
+.idCheckBtn:hover {
   border-color: var(--color-box);
   background: var(--color-box);
   color: white;

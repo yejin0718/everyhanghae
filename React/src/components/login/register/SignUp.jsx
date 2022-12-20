@@ -3,12 +3,10 @@ import { useNavigate, Link } from "react-router-dom";
 import classes from "./SignUp.module.css";
 import Card from "../../elements/Card";
 import Button from "../../elements/Button";
-import { sign_up } from "../../../core/api/LoginAPI";
+import { sign_up, duplicate_check } from "../../../core/api/LoginAPI";
 
 const SignUp = () => {
   const navigate = useNavigate();
-
-  //항해기수 옵션 map 배열
   const generationOption = [
     "--선택해주세요--",
     "1기",
@@ -23,7 +21,8 @@ const SignUp = () => {
     "10기",
   ];
 
-  //login Input State
+  //상태값
+  const [duplicateCheck, setDuplicateCheck] = useState(false);
   const [loginValue, setLoginValue] = useState({
     //빈값 처리
     email: "",
@@ -37,6 +36,20 @@ const SignUp = () => {
     isValidNickname: true,
     isValidGeneration: true,
   });
+
+  //이벤트 핸들러 함수
+  const onClickDuplicateCheckHandler = () => {
+    const postEmail = {
+      email: loginValue.email,
+    };
+    if (loginValue.email !== "") {
+      console.log("중복 체크 확인");
+      duplicate_check(postEmail).then((res) => {
+        alert(res);
+      });
+      setDuplicateCheck(true);
+    }
+  };
 
   const onChangeHandlerInput = (event) => {
     const { name, value } = event.target;
@@ -66,7 +79,6 @@ const SignUp = () => {
   const onSubminLoginValueHandler = (event) => {
     //새로고침 막음
     event.preventDefault();
-
     //빈 값 예외처리
     if (loginValue.email === "") {
       setLoginValue({ ...loginValue, isValidEmail: false });
@@ -78,19 +90,22 @@ const SignUp = () => {
       setLoginValue({ ...loginValue, isValidGeneration: false });
     } else {
       //모든 input이 빈 값이 아닌 경우 POST
-      const newLoginValue = {
-        email: loginValue.email,
-        password: loginValue.pw,
-        nickname: loginValue.nickname,
-        generation: parseInt(loginValue.generation),
-      };
-      sign_up(newLoginValue).then((res) => {
-        console.log(res);
-        navigate(`/login`);
-      });
+      if (duplicateCheck) {
+        const newLoginValue = {
+          email: loginValue.email,
+          password: loginValue.pw,
+          nickname: loginValue.nickname,
+          generation: parseInt(loginValue.generation),
+        };
+        sign_up(newLoginValue).then((res) => {
+          console.log(res);
+          setDuplicateCheck(false);
+          navigate(`/login`);
+        });
+      }
     }
   };
-  console.log("onSubmit :", loginValue);
+  //console.log("onSubmit :", loginValue);
 
   return (
     <Card className={classes.wrap}>
@@ -116,7 +131,12 @@ const SignUp = () => {
                 onChange={onChangeHandlerInput}
               />
             </div>
-            <Button className={classes.pwCheckBtn}>중복체크</Button>
+            <Button
+              className={classes.idCheckBtn}
+              onClick={onClickDuplicateCheckHandler}
+            >
+              중복체크
+            </Button>
           </div>
           <div className={classes.inputArea}>
             <label
