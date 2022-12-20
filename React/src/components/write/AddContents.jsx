@@ -91,7 +91,7 @@ const AddWrite = () => {
   };
   const alertHandler = () => {
     setModal(false);
-    // navigate("/");
+    navigate("/");
   };
 
   return (

@@ -9,6 +9,8 @@ const Header = () => {
 
   const onClickLogoutButtonHandler = () => {
     setToken(localStorage.removeItem("id"));
+    setToken(localStorage.removeItem("nickname"));
+    setToken(localStorage.removeItem("generation"));
   };
 
   useEffect(() => {}, [token]);

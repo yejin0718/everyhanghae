@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./LoginAlert.module.css";
-import Card from "../../elements/Card";
-import Button from "../../elements/Button";
+import Card from "../../components/elements/Card";
+import Button from "../../components/elements/Button";
 
 const LoginAlert = (props) => {
   return (

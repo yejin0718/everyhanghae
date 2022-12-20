@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import classes from "./SignIn.module.css";
+//components
+import image from "../../../img/icon_google.png";
 import Card from "../../elements/Card";
 import { sign_in } from "../../../core/api/LoginAPI";
 
@@ -45,7 +47,6 @@ const SignIn = () => {
       };
       sign_in(newLoginValue)
         .then((res) => {
-          console.log(res);
           alert(res.data.msg);
           localStorage.setItem("id", res.headers.authorization);
           localStorage.setItem("nickname", res.data.data.nickname);
@@ -102,6 +103,12 @@ const SignIn = () => {
 
           <div className={classes.btnArea}>
             <button>로그인</button>
+          </div>
+          <div className={classes.btnArea_google}>
+            <button>
+              <img src={image} className={classes.googleImg} />
+              Google
+            </button>
           </div>
         </form>
 

@@ -9,16 +9,16 @@ const SignUp = () => {
   const navigate = useNavigate();
   const generationOption = [
     "--선택해주세요--",
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
+    "1기",
+    "2기",
+    "3기",
+    "4기",
+    "5기",
+    "6기",
+    "7기",
+    "8기",
+    "9기",
+    "10기",
   ];
 
   //상태값
@@ -43,9 +43,10 @@ const SignUp = () => {
       email: loginValue.email,
     };
     if (loginValue.email !== "") {
-      console.log("중복 체크 확인");
+      //console.log("중복 체크 확인");
       duplicate_check(postEmail).then((res) => {
-        alert(res);
+        //console.log(res.data.msg);
+        alert(res.data.msg);
       });
       setDuplicateCheck(true);
     }
@@ -97,15 +98,11 @@ const SignUp = () => {
           nickname: loginValue.nickname,
           generation: parseInt(loginValue.generation),
         };
-        sign_up(newLoginValue)
-          .then((res) => {
-            console.log(res);
-            setDuplicateCheck(false);
-            navigate(`/login`);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        sign_up(newLoginValue).then((res) => {
+          setDuplicateCheck(false);
+          alert(res.data.msg);
+          navigate(`/login`);
+        });
       }
     }
   };
@@ -135,12 +132,13 @@ const SignUp = () => {
                 onChange={onChangeHandlerInput}
               />
             </div>
-            <Button
+            <button
+              type="button"
               className={classes.idCheckBtn}
               onClick={onClickDuplicateCheckHandler}
             >
               중복체크
-            </Button>
+            </button>
           </div>
           <div className={classes.inputArea}>
             <label
@@ -195,7 +193,7 @@ const SignUp = () => {
             >
               {generationOption.map((item, index) => (
                 <option key={index} value={item}>
-                  {item}기
+                  {item}
                 </option>
               ))}
             </select>
