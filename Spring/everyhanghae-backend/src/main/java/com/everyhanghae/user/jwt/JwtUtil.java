@@ -1,11 +1,17 @@
 package com.everyhanghae.user.jwt;
 
-import com.everyhanghae.user.entity.UserRole;
-
-import io.jsonwebtoken.*;  //
+//import com.everyhanghae.user.entity.UserRole;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -47,13 +53,13 @@ public class JwtUtil {
     }
 
     // 토큰 생성
-    public String createToken(String email, UserRole userRole) {
+    public String createToken(String email) {
         Date date = new Date();
 
         return BEARER_PREFIX +
                 Jwts.builder()
                         .setSubject(email)
-                        .claim(AUTHORIZATION_KEY, userRole)
+                        .claim(AUTHORIZATION_KEY, email)
                         .setExpiration(new Date(date.getTime() + TOKEN_TIME))
                         .setIssuedAt(date)
                         .signWith(key, signatureAlgorithm)
