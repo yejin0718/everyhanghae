@@ -70,10 +70,10 @@ public class CommentService {
         claims = checkToken(token);
         findUser();
 
-        //게시글 확인
+        /* 게시글 확인 */
         checkBoard(boardId);
 
-        //댓글 확인, 수정
+        /* 댓글 확인, 수정 */
         Comment comment = checkComment(commentId);
         checkUser(comment.getWriter(), requestDto.getUsername());
         comment.update(editComment);
@@ -92,16 +92,17 @@ public class CommentService {
         findUser();
         System.out.println("claims.getSubject() = " + claims.getSubject());
 
-        //게시글 확인
+        /* 게시글 확인 */
         checkBoard(boardId);
 
-        //댓글 확인
+        /* 댓글 확인 */
         Comment comment = checkComment(commentId);//작성한 댓글 정보들
         Optional<User> user = userRepository.findByEmail(claims.getSubject()); // 수정자 정보
         if(comment.getUserId() != user.get().getUserId()){
             throw new IllegalArgumentException(NOT_COMMENT_WRITER_EXCEPTION_MSG.getMsg());
         }
-        //댓글 삭제
+
+        /* 댓글 삭제 */
         commentRepository.delete(comment);
 
     }
