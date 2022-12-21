@@ -3,7 +3,7 @@ package com.everyhanghae.domain.board_like.Controller;
 
 import com.everyhanghae.domain.board_like.Service.BoardLikeService;
 import com.everyhanghae.shared.response.Response;
-import com.everyhanghae.security.jwt.JwtService;
+import com.everyhanghae.security.jwt.service.JwtService;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
