@@ -1,4 +1,4 @@
-package com.everyhanghae.security;
+package com.everyhanghae.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
