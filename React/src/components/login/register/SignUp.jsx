@@ -7,19 +7,10 @@ import { sign_up, duplicate_check } from "../../../core/api/LoginAPI";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  const generationOption = [
-    "--선택해주세요--",
-    "1기",
-    "2기",
-    "3기",
-    "4기",
-    "5기",
-    "6기",
-    "7기",
-    "8기",
-    "9기",
-    "10기",
-  ];
+  let generationOption = ["--선택해주세요--"];
+  for (let i = 1; i <= 10; i++) {
+    generationOption.push(i + "기");
+  }
 
   //상태값
   const [duplicateCheck, setDuplicateCheck] = useState(false);
@@ -56,26 +47,40 @@ const SignUp = () => {
     const { name, value } = event.target;
     //console.log("event.target :", event.target);
 
+    const isValidList = {
+      email: "isValidEmail",
+      pw: "isValidPW",
+      nickname: "isValidNickname",
+      generation: "isValidGeneration",
+    };
+
+    setLoginValue({
+      ...loginValue,
+      [isValidList[name]]: value ? true : false,
+      [name]: value,
+    });
+    console.log("onChange :", loginValue);
+
     //event.target.value값이 빈 값일 때 loginValue Css 변경
-    if (name === "email" && value) {
-      setLoginValue({ ...loginValue, isValidEmail: true, [name]: value });
-    } else if (name === "email" && !value) {
-      setLoginValue({ ...loginValue, isValidEmail: false, [name]: value });
-    } else if (name === "pw" && value) {
-      setLoginValue({ ...loginValue, isValidPW: true, [name]: value });
-    } else if (name === "pw" && !value) {
-      setLoginValue({ ...loginValue, isValidPW: false, [name]: value });
-    } else if (name === "nickname" && value) {
-      setLoginValue({ ...loginValue, isValidNickname: true, [name]: value });
-    } else if (name === "nickname" && !value) {
-      setLoginValue({ ...loginValue, isValidNickname: false, [name]: value });
-    } else if (name === "generation" && value) {
-      setLoginValue({ ...loginValue, isValidGeneration: true, [name]: value });
-    } else {
-      setLoginValue({ ...loginValue, isValidGeneration: false, [name]: value });
-    }
+    // if (name === "email" && value) {
+    //   setLoginValue({ ...loginValue, isValidEmail: true, [name]: value });
+    // } else if (name === "email" && !value) {
+    //   setLoginValue({ ...loginValue, isValidEmail: false, [name]: value });
+    // } else if (name === "pw" && value) {
+    //   setLoginValue({ ...loginValue, isValidPW: true, [name]: value });
+    // } else if (name === "pw" && !value) {
+    //   setLoginValue({ ...loginValue, isValidPW: false, [name]: value });
+    // } else if (name === "nickname" && value) {
+    //   setLoginValue({ ...loginValue, isValidNickname: true, [name]: value });
+    // } else if (name === "nickname" && !value) {
+    //   setLoginValue({ ...loginValue, isValidNickname: false, [name]: value });
+    // } else if (name === "generation" && value) {
+    //   setLoginValue({ ...loginValue, isValidGeneration: true, [name]: value });
+    // } else {
+    //   setLoginValue({ ...loginValue, isValidGeneration: false, [name]: value });
+    // }
+    //console.log("onChange :", loginValue);
   };
-  //console.log("onChange :", loginValue);
 
   const onSubminLoginValueHandler = (event) => {
     //새로고침 막음
@@ -106,7 +111,7 @@ const SignUp = () => {
       }
     }
   };
-  //console.log("onSubmit :", loginValue);
+  console.log("onSubmit :", loginValue);
 
   return (
     <Card className={classes.wrap}>
