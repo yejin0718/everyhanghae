@@ -55,4 +55,13 @@ public class UserController {
         ResponseInfoUser responseInfoUser = userService.login(requestLoginUser, httpServletResponse);
         return new DataResponse<>(LOGIN_USER_SUCCESS_MSG, responseInfoUser);
     }
+
+    @ResponseBody
+    @GetMapping("/kakao/callback")
+    public ResponseEntity<ResponseInfoUser> kakaoLogin(@RequestParam String code) throws JsonProcessingException {
+        // code: 카카오 서버로부터 받은 인가 코드
+        System.out.println(code);
+        var response = kakaoService.kakaoLogin(code);
+        return response;
+    }
 }
