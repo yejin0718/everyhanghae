@@ -58,10 +58,10 @@
   }
 }
 
-.btnArea {
+.btnLogin {
   margin-top: 40px;
 }
-.btnArea button {
+.btnLogin button {
   width: 100%;
   height: 50px;
   background: var(--color-box);
@@ -71,26 +71,37 @@
   border-radius: 10px;
   cursor: pointer;
 }
-.btnArea_google {
-  margin-top: 20px;
+.snsLogin {
+  color: rgb(52, 50, 50);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 50px 25px 50px;
 }
-.btnArea_google button {
-  width: 100%;
-  height: 50px;
-  border: 1px solid #888;
-  background: transparent;
-  font-size: 18px;
-  border-radius: 10px;
+.snsLogin button {
+  background: none;
+  border: none;
+}
+
+.snsLogin img {
+  width: 40px;
+  height: 40px;
   cursor: pointer;
-  position: relative;
 }
-.googleImg {
-  position: absolute;
-  left: 30px;
+.snsLogin .google:hover {
+  border-radius: 50%;
+  border: 1.5px solid #ea4335;
+}
+.snsLogin .kakao:hover {
+  border-radius: 50%;
+  border: 1.5px solid #f9e000;
+}
+.snsLogin .githup:hover {
+  border-radius: 50%;
+  border: 1.5px solid black;
 }
 
 .caption {
-  margin-top: 30px;
   text-align: center;
 }
 .caption .link {

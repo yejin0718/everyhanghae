@@ -4,8 +4,6 @@ import Card from "../elements/Card";
 import Button from "../elements/Button";
 
 const AlertModal = ({ onAlert, text }) => {
-  console.log(onAlert);
-  console.log(text);
   return (
     <div className={classes.backdrop} onClick={onAlert}>
       <Card className={classes.modal}>

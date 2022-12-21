@@ -14,7 +14,7 @@ const AddContents = () => {
 
   const dispatch = useDispatch();
   const { isSuccess } = useSelector((state) => state.contents);
-  console.log("isSuccess :", isSuccess);
+  //console.log("isSuccess :", isSuccess);
 
   const [modal, setModal] = useState(false);
   const [contentsValue, setContentsValue] = useState({
