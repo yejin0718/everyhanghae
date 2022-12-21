@@ -4,9 +4,10 @@ import { instance } from "./instance";
 export const duplicate_check = async (post) => {
   try {
     const data = await instance.post(`users/duplicate`, post);
-    console.log("data :", data);
+    //console.log("중복 체크 data :", data);
     return data;
   } catch (error) {
+    //console.log("중복체크 error :", error.response.data.msg);
     alert(error.response.data.msg);
   }
 };
@@ -20,6 +21,7 @@ export const sign_up = async (post) => {
     alert(error.response.data.msg);
   }
 };
+
 //singin : 로그인
 export const sign_in = async (post) => {
   try {

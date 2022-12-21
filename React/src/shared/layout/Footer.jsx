@@ -1,12 +1,8 @@
 import React from "react";
-import classes from "./Footer.module.css";
+import classes from "./Layout.module.css";
 
 const Footer = () => {
-  return (
-    <div className={classes.footer}>
-      Copyright ©2022 TEAM A-1. All rights reserved.
-    </div>
-  );
+  return <div className={classes.footer}>@항해99 10기_1조</div>;
 };
 
 export default Footer;

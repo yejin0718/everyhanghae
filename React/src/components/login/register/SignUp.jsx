@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import classes from "./SignUp.module.css";
-import Card from "../../elements/Card";
-import Button from "../../elements/Button";
 import { sign_up, duplicate_check } from "../../../core/api/LoginAPI";
+import Card from "../../elements/Card";
+import classes from "./SignUp.module.css";
 
 const SignUp = () => {
   const navigate = useNavigate();
-  let generationOption = ["--선택해주세요--"];
+  //옵션 태그 배열로 만들기
+  let generationOption = [""];
   for (let i = 1; i <= 10; i++) {
     generationOption.push(i + "기");
   }
@@ -15,13 +15,13 @@ const SignUp = () => {
   //상태값
   const [duplicateCheck, setDuplicateCheck] = useState(false);
   const [loginValue, setLoginValue] = useState({
-    //빈값 처리
+    //빈값
     email: "",
     pw: "",
     nickname: "",
     generation: "",
 
-    //상태에 따라 alert 대신 css 처리
+    //빈값일 때 상태에 따라 css 처리
     isValidEmail: true,
     isValidPW: true,
     isValidNickname: true,
@@ -34,34 +34,30 @@ const SignUp = () => {
       email: loginValue.email,
     };
     if (loginValue.email !== "") {
-      //console.log("중복 체크 확인");
       duplicate_check(postEmail).then((res) => {
-        //console.log(res.data.msg);
         alert(res.data.msg);
       });
       setDuplicateCheck(true);
     }
   };
 
-  const onChangeHandlerInput = (event) => {
+  const onChangeInputHandler = (event) => {
     const { name, value } = event.target;
     //console.log("event.target :", event.target);
 
+    //event.target.value값이 빈 값일 때 loginValue Css 변경
     const isValidList = {
       email: "isValidEmail",
       pw: "isValidPW",
       nickname: "isValidNickname",
       generation: "isValidGeneration",
     };
-
     setLoginValue({
       ...loginValue,
       [isValidList[name]]: value ? true : false,
       [name]: value,
     });
-    console.log("onChange :", loginValue);
 
-    //event.target.value값이 빈 값일 때 loginValue Css 변경
     // if (name === "email" && value) {
     //   setLoginValue({ ...loginValue, isValidEmail: true, [name]: value });
     // } else if (name === "email" && !value) {
@@ -79,11 +75,10 @@ const SignUp = () => {
     // } else {
     //   setLoginValue({ ...loginValue, isValidGeneration: false, [name]: value });
     // }
-    //console.log("onChange :", loginValue);
   };
+  //console.log("onChange :", loginValue);
 
   const onSubminLoginValueHandler = (event) => {
-    //새로고침 막음
     event.preventDefault();
     //빈 값 예외처리
     if (loginValue.email === "") {
@@ -95,7 +90,7 @@ const SignUp = () => {
     } else if (loginValue.generation === "") {
       setLoginValue({ ...loginValue, isValidGeneration: false });
     } else {
-      //모든 input이 빈 값이 아닌 경우 POST
+      //모든 input이 빈 값이 아니고 duplicateCheck가 true인 경우
       if (duplicateCheck) {
         const newLoginValue = {
           email: loginValue.email,
@@ -108,10 +103,12 @@ const SignUp = () => {
           alert(res.data.msg);
           navigate(`/login`);
         });
+      } else {
+        alert("이메일 중복 체크해주세요.");
       }
     }
   };
-  console.log("onSubmit :", loginValue);
+  //console.log("onSubmit 데이터:", loginValue);
 
   return (
     <Card className={classes.wrap}>
@@ -134,7 +131,7 @@ const SignUp = () => {
                 name="email"
                 type="text"
                 value={loginValue.email}
-                onChange={onChangeHandlerInput}
+                onChange={onChangeInputHandler}
               />
             </div>
             <button
@@ -160,7 +157,7 @@ const SignUp = () => {
               name="pw"
               type="password"
               value={loginValue.pw}
-              onChange={onChangeHandlerInput}
+              onChange={onChangeInputHandler}
             />
           </div>
           <div className={classes.inputArea}>
@@ -178,7 +175,7 @@ const SignUp = () => {
               name="nickname"
               type="text"
               value={loginValue.nickname}
-              onChange={onChangeHandlerInput}
+              onChange={onChangeInputHandler}
             />
           </div>
           <div className={classes.inputArea}>
@@ -194,7 +191,7 @@ const SignUp = () => {
               className={classes.input}
               id="generation"
               name="generation"
-              onChange={onChangeHandlerInput}
+              onChange={onChangeInputHandler}
             >
               {generationOption.map((item, index) => (
                 <option key={index} value={item}>

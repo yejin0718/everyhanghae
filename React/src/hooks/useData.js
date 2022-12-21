@@ -1,4 +1,4 @@
-import React from "react";
+//데이터 입력 형택 hook
 
 const useDate = () => {
   //createDate함수 만들기

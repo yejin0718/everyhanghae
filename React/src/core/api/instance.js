@@ -11,11 +11,12 @@ export const instance = axios.create({
 });
 
 //request header
-// -> axios.interceptors ... //interceptors공부하기
+//interceptors : axios에서 지원하는 기능. axios에서 요청을 보내는 것을 가로채서 추가하기
 instance.interceptors.request.use((config) => {
   if (config.headers === undefined) return;
   //localStorage.getItem("key") -> 키로 부터 데이터 읽기
   const token = localStorage.getItem("id");
+  //console.log(config);
   config.headers["Authorization"] = `${token}`;
   return config;
 });
