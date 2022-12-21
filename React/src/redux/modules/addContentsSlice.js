@@ -46,6 +46,9 @@ export const addContentsSlice = createSlice({
     [__addContents.rejected]: (state, action) => {
       state.isLoading = false; // 에러가 발생했지만, 네트워크 요청이 끝났으니, false로 변경합니다.
       state.error = action.payload; // catch 된 error 객체를 state.error에 넣습니다.
+      state.isSuccess = false;
+      //console.log(action.payload);
+      //alert(action.payload.response.data.msg);
     },
   },
 });
