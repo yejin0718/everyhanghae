@@ -1,9 +1,11 @@
 package com.everyhanghae.security.config;
 
+import com.everyhanghae.security.auth.PrincipalOauth2UserService;
 import com.everyhanghae.security.exception.CustomAuthenticationEntryPoint;
 import com.everyhanghae.security.jwt.filter.JwtAuthFilter;
 import com.everyhanghae.security.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,6 +23,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class SecurityConfig {
 
 	private final JwtService jwtService;
+	@Autowired private PrincipalOauth2UserService principalOauth2UserService;
 
 	@Bean
 	public AuthenticationEntryPoint authenticationEntryPoint() {
@@ -46,7 +49,14 @@ public class SecurityConfig {
 			.antMatchers(GET, "/api/boards/**")
 				.permitAll()
 			.anyRequest()
-				.authenticated();
+				.authenticated()
+				.and()
+				.oauth2Login()				//추가
+					.loginPage("/login")			// 인증이 필요한 URL에 접근하면 /login으로 이동
+					.defaultSuccessUrl("/")			// 로그인 성공하면 "/" 으로 이동
+					.failureUrl("/login")			// 로그인 실패 시 /login으로 이동
+					.userInfoEndpoint()			// 로그인 성공 후 사용자정보를 가져온다
+					.userService(principalOauth2UserService);		//사용자정보를 처리할 때 사용한다
 
 		http.addFilterBefore(new JwtAuthFilter(jwtService), UsernamePasswordAuthenticationFilter.class);
 		http.exceptionHandling()
