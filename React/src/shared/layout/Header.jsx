@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import classes from "./Header.module.css";
+import classes from "./Layout.module.css";
 //component
 import Button from "../../components/elements/Button";
 

@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import classes from "./SignIn.module.css";
-//components
+import { sign_in } from "../../../core/api/LoginAPI";
 import image from "../../../img/icon_google.png";
 import Card from "../../elements/Card";
-import { sign_in } from "../../../core/api/LoginAPI";
+import classes from "./SignIn.module.css";
 
 const SignIn = () => {
   const navigate = useNavigate();
-  //login Input State
   const [loginValue, setLoginValue] = useState({
     email: "",
     pw: "",
@@ -19,7 +17,6 @@ const SignIn = () => {
 
   const onChangeInputHandler = (event) => {
     const { name, value } = event.target;
-
     //event.target.value값이 빈 값일 때 loginValue Css 변경
     if (name === "email" && value) {
       setLoginValue({ ...loginValue, isValidEmail: true, [name]: value });
@@ -34,7 +31,6 @@ const SignIn = () => {
   //console.log("onChange :", loginValue);
 
   const onSubminLoginValueHandler = (event) => {
-    //새로고침 막음
     event.preventDefault();
     if (loginValue.email === "") {
       setLoginValue({ ...loginValue, isValidEmail: false });
@@ -45,17 +41,13 @@ const SignIn = () => {
         email: loginValue.email,
         password: loginValue.pw,
       };
-      sign_in(newLoginValue)
-        .then((res) => {
-          alert(res.data.msg);
-          localStorage.setItem("id", res.headers.authorization);
-          localStorage.setItem("nickname", res.data.data.nickname);
-          localStorage.setItem("generation", res.data.data.generation);
-          navigate("/");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      sign_in(newLoginValue).then((res) => {
+        alert(res.data.msg);
+        localStorage.setItem("id", res.headers.authorization);
+        localStorage.setItem("nickname", res.data.data.nickname);
+        localStorage.setItem("generation", res.data.data.generation);
+        navigate("/");
+      });
     }
   };
   //console.log("onSubmit :", loginValue);

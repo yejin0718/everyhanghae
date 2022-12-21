@@ -18,6 +18,7 @@
 .button:focus {
   outline: none;
 }
+
 /* 카드 */
 .card {
   border-radius: 10px;
