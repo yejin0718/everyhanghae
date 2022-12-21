@@ -9,7 +9,7 @@ import com.everyhanghae.domain.comment.mapper.CommentMapper;
 import com.everyhanghae.domain.comment.repository.CommentRepository;
 import com.everyhanghae.domain.user.entity.User;
 import com.everyhanghae.domain.user.repository.UserRepository;
-import com.everyhanghae.security.jwt.JwtUtil;
+import com.everyhanghae.security.jwt.util.JwtUtil;
 
 import io.jsonwebtoken.Claims;
 

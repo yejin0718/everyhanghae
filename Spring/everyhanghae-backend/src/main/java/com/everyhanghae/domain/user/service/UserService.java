@@ -5,7 +5,7 @@ import com.everyhanghae.domain.user.dto.RequestDuplicateUser;
 import com.everyhanghae.domain.user.dto.RequestLoginUser;
 import com.everyhanghae.domain.user.dto.ResponseInfoUser;
 import com.everyhanghae.domain.user.entity.User;
-import com.everyhanghae.security.jwt.JwtUtil;
+import com.everyhanghae.security.jwt.util.JwtUtil;
 import com.everyhanghae.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
