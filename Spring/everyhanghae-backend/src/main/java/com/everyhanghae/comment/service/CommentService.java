@@ -17,11 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.Optional;
+
+import static com.everyhanghae.common.exception.ExceptionMessage.NOT_COMMENT_WRITER_EXCEPTION_MSG;
 import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_BOARD_EXCEPTION_MSG;
 import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_COMMENT_EXCEPTION_MSG;
 import static com.everyhanghae.common.exception.ExceptionMessage.NO_EXIST_USER_EXCEPTION_MSG;
 import static com.everyhanghae.common.exception.ExceptionMessage.TOKEN_ERROR_EXCEPTION_MSG;
-import static com.everyhanghae.common.exception.ExceptionMessage.WRONG_COMMENT_WRITER_EXCEPTION;
 
 @RequiredArgsConstructor
 @Service
@@ -83,15 +85,22 @@ public class CommentService {
      * 댓글 삭제
      */
     @Transactional
-    public void deleteComment(Long boardId, Long commentId) {
-        //유저 확인(추가 예정)
+    public void deleteComment(Long boardId, Long commentId, HttpServletRequest request) {
+        /* 로그인 확인 */
+        String token = jwtUtil.resolveToken(request);
+        claims = checkToken(token);
+        findUser();
+        System.out.println("claims.getSubject() = " + claims.getSubject());
 
         //게시글 확인
         checkBoard(boardId);
 
         //댓글 확인
-        Comment comment = checkComment(commentId);
-
+        Comment comment = checkComment(commentId);//작성한 댓글 정보들
+        Optional<User> user = userRepository.findByEmail(claims.getSubject()); // 수정자 정보
+        if(comment.getUserId() != user.get().getUserId()){
+            throw new IllegalArgumentException(NOT_COMMENT_WRITER_EXCEPTION_MSG.getMsg());
+        }
         //댓글 삭제
         commentRepository.delete(comment);
 
@@ -148,7 +157,7 @@ public class CommentService {
         System.out.println("commentUser = " + commentUser);
         System.out.println("requestUser = " + requestUser);
         if(!commentUser.equals(requestUser)){
-            throw new IllegalArgumentException(WRONG_COMMENT_WRITER_EXCEPTION.getMsg());
+            throw new IllegalArgumentException(NOT_COMMENT_WRITER_EXCEPTION_MSG.getMsg());
         }
     }
 

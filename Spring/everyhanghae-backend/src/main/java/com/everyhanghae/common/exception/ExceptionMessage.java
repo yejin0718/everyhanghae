@@ -16,6 +16,7 @@ public enum ExceptionMessage {
 
     //comment
     NO_EXIST_COMMENT_EXCEPTION_MSG(404, "댓글이 존재하지 않습니다."),
+    NOT_COMMENT_WRITER_EXCEPTION_MSG(400, "댓글 작성자가 아닙니다."),
 
     // user
     TOKEN_ERROR_EXCEPTION_MSG(400, "Token Error"),
