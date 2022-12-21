@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
 import { instance } from "../../core/api/instance";
-import axios from "axios";
 
 const initialState = {
   data: [],
@@ -25,13 +24,12 @@ export const __patchDetailView = createAsyncThunk(
   "DetailView/patchboard",
   async (payload, thunkAPI) => {
     try {
-      // const data = await instance.put(`board/${payload}`);
-      // return thunkAPI.fulfillWithValue(data)
-      const data = await axios.patch(
-        `http://localhost:3001/data/${payload.id}`,
-        payload
-      );
-      return thunkAPI.fulfillWithValue(data.data);
+      const data = await instance.patch(`boards/${payload.id}`, {
+        title: payload.title,
+        content: payload.content,
+        category: payload.category,
+      });
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -42,9 +40,7 @@ export const __deleteDetailView = createAsyncThunk(
   "DetailView/deleteboard",
   async (payload, thunkAPI) => {
     try {
-      // const data = await instance.delete(`board/${payload}`);
-      // thunkAPI.fulfillWithValue(data.data)
-      await axios.delete(`http://localhost:3001/data/${payload}`);
+      await instance.delete(`boards/${payload}`);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -63,27 +59,21 @@ export const boardReducer = createSlice({
     [__getMainView.fulfilled]: (state, action) => {
       state.data = action.payload;
     },
-    [__getMainView.rejected]: (_state, _action) => {
-      alert("연결실패");
-    },
+    [__getMainView.rejected]: (_state, _action) => {},
     // 상세페이지 수정
     [__patchDetailView.pending]: (_state) => {},
     [__patchDetailView.fulfilled]: (state, action) => {
       state.data = state.data;
     },
-    [__patchDetailView.rejected]: (_state, _action) => {
-      alert("연결실패");
-    },
+    [__patchDetailView.rejected]: (_state, _action) => {},
     // 상세페이지 삭제
     [__deleteDetailView.pending]: (_state) => {},
     [__deleteDetailView.fulfilled]: (state, action) => {
       state.data = state.data.filter(
-        (delData) => delData.id === action.payload
+        (delData) => delData.id !== action.payload
       );
     },
-    [__deleteDetailView.rejected]: (_state, _action) => {
-      alert("연결실패");
-    },
+    [__deleteDetailView.rejected]: (state, action) => {},
   },
 });
 

@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import classes from "./Detail.module.css";
 import Button from "../elements/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { __deleteDetailView } from "../../redux/modules/boardReducer";
+import {
+  __deleteDetailView,
+  __getMainView,
+} from "../../redux/modules/boardReducer";
 import { __getDetailView } from "../../redux/modules/commentReducer";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -15,13 +18,14 @@ const DetailBoard = () => {
     dispatch(__getDetailView(id));
   }, [dispatch, id]);
   const detailView = useSelector((state) => state.comment.data);
-  console.log(detailView);
+
   const onClickBoardUpdateHandler = () => {
     navigate(`update`);
   };
 
-  const onClickBoardDeleteHandler = (id) => {
+  const onClickBoardDeleteHandler = async (id) => {
     dispatch(__deleteDetailView(id));
+    dispatch(__getMainView());
     navigate("/");
   };
   return (
