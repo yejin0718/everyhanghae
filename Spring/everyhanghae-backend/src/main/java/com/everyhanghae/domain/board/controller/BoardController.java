@@ -29,7 +29,7 @@ import com.everyhanghae.domain.board.dto.ResponseBoardListItem;
 import com.everyhanghae.domain.board.service.BoardService;
 import com.everyhanghae.shared.response.DataResponse;
 import com.everyhanghae.shared.response.Response;
-import com.everyhanghae.security.jwt.JwtService;
+import com.everyhanghae.security.jwt.service.JwtService;
 
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
