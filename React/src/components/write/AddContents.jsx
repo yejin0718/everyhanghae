@@ -1,23 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import classes from "./AddContents.module.css";
 import Card from "../elements/Card";
 import Button from "../elements/Button";
+import classes from "./AddContents.module.css";
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { __addContents } from "../../redux/modules/addContentsSlice";
 import AlertModal from "./AlertModal";
 
-const AddWrite = () => {
+const AddContents = () => {
   const categoryOption = ["", "BE", "FE", "FREE", "SECRET"];
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
   const { isSuccess } = useSelector((state) => state.contents);
   console.log("isSuccess :", isSuccess);
 
-  //모달창 State
   const [modal, setModal] = useState(false);
-  //Input value State
   const [contentsValue, setContentsValue] = useState({
     title: "",
     contents: "",
@@ -26,7 +25,8 @@ const AddWrite = () => {
     isValidTitle: true,
     isValidContnts: true,
   });
-  console.log("contentsValue :", contentsValue);
+  //console.log("contentsValue :", contentsValue);
+
   //상태값과 데이터를 읽어오는 타이밍이 다를 수 있음 -> useEffect를 통해서 재렌더링함
   // useEffect(() => {
   //   if (contents.contents === "" || contents.contents === undefined) {
@@ -66,7 +66,6 @@ const AddWrite = () => {
 
   const onSubmitInputValueHandler = (event) => {
     event.preventDefault();
-    //보낼 데이터
     const newContents = {
       title: contentsValue.title,
       content: contentsValue.contents,
@@ -156,4 +155,4 @@ const AddWrite = () => {
   );
 };
 
-export default AddWrite;
+export default AddContents;

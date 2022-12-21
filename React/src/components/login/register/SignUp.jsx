@@ -130,6 +130,7 @@ const SignUp = () => {
                 id="email"
                 name="email"
                 type="text"
+                autoComplete="off"
                 value={loginValue.email}
                 onChange={onChangeInputHandler}
               />
@@ -174,6 +175,7 @@ const SignUp = () => {
               id="nickname"
               name="nickname"
               type="text"
+              autoComplete="off"
               value={loginValue.nickname}
               onChange={onChangeInputHandler}
             />
