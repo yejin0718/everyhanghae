@@ -4,6 +4,7 @@ import { instance } from "../../core/api/instance";
 
 const initialState = {
   data: [],
+  isSuccess: false,
 };
 
 // 메인 페이지 조회(완료!)
@@ -29,7 +30,7 @@ export const __patchDetailView = createAsyncThunk(
         content: payload.content,
         category: payload.category,
       });
-      return thunkAPI.fulfillWithValue(data);
+      return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -59,13 +60,18 @@ export const boardReducer = createSlice({
     [__getMainView.fulfilled]: (state, action) => {
       state.data = action.payload;
     },
-    [__getMainView.rejected]: (_state, _action) => {},
+    [__getMainView.rejected]: (_state, action) => {
+      alert(action.payload.response.data.msg);
+    },
     // 상세페이지 수정
     [__patchDetailView.pending]: (_state) => {},
     [__patchDetailView.fulfilled]: (state, action) => {
       state.data = state.data;
+      state.isSuccess = true;
     },
-    [__patchDetailView.rejected]: (_state, _action) => {},
+    [__patchDetailView.rejected]: (_state, action) => {
+      alert(action.payload.response.data.msg);
+    },
     // 상세페이지 삭제
     [__deleteDetailView.pending]: (_state) => {},
     [__deleteDetailView.fulfilled]: (state, action) => {
@@ -73,7 +79,9 @@ export const boardReducer = createSlice({
         (delData) => delData.id !== action.payload
       );
     },
-    [__deleteDetailView.rejected]: (state, action) => {},
+    [__deleteDetailView.rejected]: (state, action) => {
+      alert(action.payload.response.data.msg);
+    },
   },
 });
 

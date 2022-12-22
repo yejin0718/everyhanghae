@@ -3,6 +3,7 @@ import classes from "./AlertModal.module.css";
 import Card from "../elements/Card";
 import Button from "../elements/Button";
 
+
 const AlertModal = ({ onAlert, text }) => {
   return (
     <div className={classes.backdrop} onClick={onAlert}>
