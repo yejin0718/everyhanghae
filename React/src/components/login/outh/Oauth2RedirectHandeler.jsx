@@ -12,7 +12,7 @@ const Oauth2RedirectHandeler = () => {
     await instance
       .post(`users/login/kakao`, code)
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         //localStorage.setItem("id", res.headers.authorization);
         //navigate("/")
       })
