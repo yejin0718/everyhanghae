@@ -20,6 +20,7 @@
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)
 ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
 ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 
 | React | Springboot |
 |:------:|:------:|
@@ -32,13 +33,6 @@
 와이어 프레임 : [와이어 프레임](https://www.notion.so/3ead07ea04394a049ded4f29969cb6a6)
 <br />
 API 기능 명세서 : [API 기능 명세서](https://www.notion.so/API-a2fd4d7cf16d47e39008088b25c0f99e)
-
-<br />
-
-## 핵심 기능
-
-Axios 통신
-
 
 <br />
 
