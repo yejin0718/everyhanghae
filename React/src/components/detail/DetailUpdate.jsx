@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from "../write/AddContents.module.css";
 import Card from "../elements/Card";
 import Button from "../elements/Button";
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { __patchDetailView } from "../../redux/modules/boardReducer";
+import { __getDetailView } from "../../redux/modules/commentReducer";
 import AlertModal from "./DetailUpdateModal";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -12,16 +13,21 @@ import { useNavigate } from "react-router-dom";
 const DetailUpdate = () => {
   const categoryOption = ["", "BE", "FE", "FREE", "SECRET"];
   const dispatch = useDispatch();
-  const { isSuccess } = useSelector((state) => state.contents);
+  const isSuccess = useSelector((state) => state.board.isSuccess);
   const { id } = useParams();
   const navigate = useNavigate();
   //모달창 State
   const [modal, setModal] = useState(false);
+  useEffect(() => {
+    dispatch(__getDetailView(id));
+  }, [dispatch, id]);
+
+  const updateView = useSelector((state) => state.comment.data);
   //Input value State
   const [contentsValue, setContentsValue] = useState({
-    title: "",
-    contents: "",
-    category: "",
+    title: updateView.title,
+    contents: updateView.content,
+    category: updateView.category,
 
     isValidTitle: true,
     isValidContnts: true,
@@ -73,13 +79,6 @@ const DetailUpdate = () => {
       dispatch(__patchDetailView(newContents));
       setModal(true);
       //POST 후 빈값으로 변경
-      setContentsValue({
-        title: "",
-        contents: "",
-        category: "",
-        isValidTitle: true,
-        isValidContnts: true,
-      });
     }
   };
   const alertHandler = () => {
