@@ -6,6 +6,7 @@ import Main from "../pages/Main";
 import Write from "../pages/Write";
 import Detail from "../pages/Detail";
 import Update from "../pages/Update";
+import Oauth2RedirectHandeler from "../components/login/outh/Oauth2RedirectHandeler";
 
 const Router = () => {
   return (
@@ -13,6 +14,10 @@ const Router = () => {
       <Routes>
         <Route>
           <Route path="/login" element={<Login />} />
+          <Route
+            path="/api/users/kakao/callback"
+            element={<Oauth2RedirectHandeler />}
+          />
           <Route path="/register" element={<Register />} />
         </Route>
         <Route element={<Layout />}>
