@@ -9,6 +9,10 @@
 
 ## 실행화면
 
+https://user-images.githubusercontent.com/96729804/209109284-6fb75f6b-b791-417a-a146-440f5716fb1b.mp4
+
+
+
 <br />
 
 ## 기술 스택
