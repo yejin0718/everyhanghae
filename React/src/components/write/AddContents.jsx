@@ -14,7 +14,7 @@ const AddContents = () => {
 
   const dispatch = useDispatch();
   const { isSuccess } = useSelector((state) => state.contents);
-  console.log("isSuccess :", isSuccess);
+  //console.log("isSuccess :", isSuccess);
 
   const [modal, setModal] = useState(false);
   const [contentsValue, setContentsValue] = useState({
@@ -23,7 +23,7 @@ const AddContents = () => {
     category: "",
 
     isValidTitle: true,
-    isValidContnts: true,
+    isValidContents: true,
   });
   //console.log("contentsValue :", contentsValue);
 
@@ -39,29 +39,39 @@ const AddContents = () => {
     const { name, value } = event.target;
 
     ////event.target.value값이 빈 값일 때 loginValue Css 변경
-    if (name === "category" && value) {
-      setContentsValue({ ...contentsValue, [name]: value });
-    } else if (name === "title" && value) {
-      setContentsValue({ ...contentsValue, isValidTitle: true, [name]: value });
-    } else if (name === "contents" && value) {
-      setContentsValue({
-        ...contentsValue,
-        isValidContnts: true,
-        [name]: value,
-      });
-    } else if (name === "title" && !value) {
-      setContentsValue({
-        ...contentsValue,
-        isValidTitle: false,
-        [name]: value,
-      });
-    } else {
-      setContentsValue({
-        ...contentsValue,
-        isValidContnts: false,
-        [name]: value,
-      });
-    }
+    const isValidList = {
+      title: "isValidTitle",
+      contents: "isValidContents",
+    };
+    setContentsValue({
+      ...contentsValue,
+      [isValidList[name]]: value ? true : false,
+      [name]: value,
+    });
+
+    //   if (name === "category" && value) {
+    //     setContentsValue({ ...contentsValue, [name]: value });
+    //   } else if (name === "title" && value) {
+    //     setContentsValue({ ...contentsValue, isValidTitle: true, [name]: value });
+    //   } else if (name === "contents" && value) {
+    //     setContentsValue({
+    //       ...contentsValue,
+    //       isValidContents: true,
+    //       [name]: value,
+    //     });
+    //   } else if (name === "title" && !value) {
+    //     setContentsValue({
+    //       ...contentsValue,
+    //       isValidTitle: false,
+    //       [name]: value,
+    //     });
+    //   } else {
+    //     setContentsValue({
+    //       ...contentsValue,
+    //       isValidContents: false,
+    //       [name]: value,
+    //     });
+    //   }
   };
 
   const onSubmitInputValueHandler = (event) => {
@@ -74,7 +84,7 @@ const AddContents = () => {
     if (contentsValue.title === "") {
       setContentsValue({ ...contentsValue, isValidTitle: false });
     } else if (contentsValue.contents === "") {
-      setContentsValue({ ...contentsValue, isValidContnts: false });
+      setContentsValue({ ...contentsValue, isValidContents: false });
     } else {
       dispatch(__addContents(newContents));
       setModal(true);
@@ -84,19 +94,24 @@ const AddContents = () => {
         contents: "",
         category: "",
         isValidTitle: true,
-        isValidContnts: true,
+        isValidContents: true,
       });
     }
   };
   const alertHandler = () => {
     setModal(false);
-    navigate("/");
+    isSuccess ? navigate("/") : navigate("/login");
   };
 
   return (
     <div>
       {isSuccess && modal ? (
-        <AlertModal onAlert={alertHandler} />
+        <AlertModal
+          onAlert={alertHandler}
+          text={"게시글이 등록되었습니다. 🎉"}
+        />
+      ) : isSuccess === false && modal ? (
+        <AlertModal onAlert={alertHandler} text={"로그인을 해주세요."} />
       ) : (
         <form className={classes.wrap} onSubmit={onSubmitInputValueHandler}>
           <Card className={classes.box}>
@@ -134,7 +149,7 @@ const AddContents = () => {
               <label htmlFor="contents">내용</label>
               <textarea
                 className={`${
-                  contentsValue.isValidContnts
+                  contentsValue.isValidContents
                     ? classes.textarea
                     : classes.textarea_warning
                 }`}

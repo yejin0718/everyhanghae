@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { sign_in } from "../../../core/api/LoginAPI";
-import image from "../../../img/icon_google.png";
+import google from "../../../img/icon_google.png";
+import kakao from "../../../img/icon_kakao.png";
+import githup from "../../../img/icon_github.png";
 import Card from "../../elements/Card";
 import classes from "./SignIn.module.css";
 
@@ -30,7 +32,7 @@ const SignIn = () => {
   };
   //console.log("onChange :", loginValue);
 
-  const onSubminLoginValueHandler = (event) => {
+  const onSubmitLoginValueHandler = (event) => {
     event.preventDefault();
     if (loginValue.email === "") {
       setLoginValue({ ...loginValue, isValidEmail: false });
@@ -42,6 +44,7 @@ const SignIn = () => {
         password: loginValue.pw,
       };
       sign_in(newLoginValue).then((res) => {
+        //console.log("res", res);
         alert(res.data.msg);
         localStorage.setItem("id", res.headers.authorization);
         localStorage.setItem("nickname", res.data.data.nickname);
@@ -57,7 +60,7 @@ const SignIn = () => {
       <section className={classes.container}>
         <h1>에브리항해</h1>
 
-        <form onSubmit={onSubminLoginValueHandler}>
+        <form onSubmit={onSubmitLoginValueHandler}>
           <div className={classes.inputArea}>
             <label
               htmlFor="email"
@@ -93,18 +96,25 @@ const SignIn = () => {
             />
           </div>
 
-          <div className={classes.btnArea}>
+          <div className={classes.btnLogin}>
             <button>로그인</button>
           </div>
-          <div className={classes.btnArea_google}>
-            <button>
-              <img src={image} className={classes.googleImg} />
-              Google
+
+          <div className={classes.snsLogin}>
+            <p>SNS 간편 로그인</p>
+            <button type="button">
+              <img src={google} className={classes.google} />
+            </button>
+            <button type="button">
+              <img src={kakao} className={classes.kakao} />
+            </button>
+            <button type="button">
+              <img src={githup} className={classes.githup} />
             </button>
           </div>
         </form>
 
-        <div className={classes.caption}>
+        <div type="button" className={classes.caption}>
           <Link className={classes.link} to="/register">
             아직 회원이 아니신가요?
           </Link>
