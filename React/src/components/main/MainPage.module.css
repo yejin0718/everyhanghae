@@ -1,0 +1,89 @@
+.mainTop {
+  margin: 50px auto 0;
+  max-width: 1000px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mainTop > div {
+  width: 200px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  border: 2px solid #8997c5;
+  border-radius: 10px;
+}
+
+.mainTop > button {
+  width: 100px;
+  font-size: 20px;
+  background-color: #8997c5;
+  color: white;
+}
+
+.mainMidMarquee {
+  margin: 50px auto 0;
+  max-width: 800px;
+  font-size: 20px;
+
+  border-radius: 10px;
+}
+
+.mainMiddleBtn {
+  max-width: 1000px;
+  margin: 30px auto 0;
+  display: flex;
+  justify-content: left;
+  gap: 5px;
+}
+
+.mainMiddleBtn > button {
+  width: 100px;
+  font-size: 20px;
+  background-color: #8997c5;
+}
+
+.mainBoards {
+  margin: 30px auto 0;
+  max-width: 1000px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #8997c5;
+  border-radius: 10px;
+}
+
+.mainBoardView {
+  display: flex;
+  margin: 0 0 0 20px;
+  width: 800px;
+}
+
+.likeAndCommentCount {
+  width: 70px;
+  display: flex;
+  justify-content: left;
+}
+
+.mainWriter {
+  width: 150px;
+  margin: 0 20px 0 20px;
+}
+
+.mainIcon {
+  margin: 0 20px 0 0;
+}
+
+.bubble {
+  margin-right: 10px;
+}
+
+.mainLink {
+  color: black;
+}
+
+.Heart {
+  margin-right: 10px;
+}

@@ -1,70 +1,62 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 🚢 항해99 미니 프로젝트 - 에브리항해
 
-## Available Scripts
++ 항해99 참여원들이 익명으로 게시글을 작성할 수 있는 사이트
++ 사이트 : http://everyhanghae.s3-website.ap-northeast-2.amazonaws.com/
++ 프로젝트 기간 2022.12.16 ~ 2022.12.22
 
-In the project directory, you can run:
+<br />
 
-### `yarn start`
+## 실행화면
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<br />
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 기술 스택
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) 
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 
-### `yarn test`
+| React | Springboot |
+|:------:|:------:|
+|![React-icon svg](https://user-images.githubusercontent.com/85235063/189798318-2c7fe7d2-b9ea-45a8-a373-8386474da228.png)|![spring](https://user-images.githubusercontent.com/85235063/189798456-35af17d6-c99e-4412-9057-e01c79cf6d9c.png)|
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<br />
 
-### `yarn build`
+## 기획
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+와이어 프레임 : [와이어 프레임](https://www.notion.so/3ead07ea04394a049ded4f29969cb6a6)
+<br />
+API 기능 명세서 : [API 기능 명세서](https://www.notion.so/API-a2fd4d7cf16d47e39008088b25c0f99e)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br />
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 개발 환경 설정
+React
+```React
+yarn install
+```
 
-### `yarn eject`
+<br />
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 팀원
+[백엔드]
++ 김예진 [yejin0718](https://github.com/yejin0718)
++ 민승기 [seunGit](https://github.com/seunGit)
++ 윤진국 [GGONG1956](https://github.com/GGONG1956)
++ 이한주 [yanJuicy](https://github.com/yanJuicy)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+[프론트엔드]
++ 김동현 [JeongO41](https://github.com/JeongO41)
++ 이현정 [cchloe0927](https://github.com/cchloe0927)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<br/>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 프로젝트 기록
+노션 : [개발 과정](https://www.notion.so/1-8ee3cc7fb9b24384a6f5cf5669d7878f)
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

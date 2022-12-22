@@ -1,0 +1,146 @@
+.detailTop {
+  max-width: 900px;
+  height: 550px;
+  margin: 50px auto 0;
+  border: 3px solid #8997c5;
+  border-radius: 20px;
+}
+
+.detailTitleAndButton {
+  width: 90%;
+  height: 50px;
+  margin: 30px 50px 10px;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+}
+.detailTitleAndButton > div {
+  width: 80%;
+}
+
+.detailTitleAndButton > button {
+  display: flex;
+  justify-content: center;
+  margin-right: 10px;
+  width: 80px;
+  background-color: #8997c5;
+}
+
+.detailContentIn {
+  /* max-width: 900px; */
+  height: 300px;
+  border-radius: 20px;
+  margin: 0 30px 0 50px;
+  border: 2px solid #8997c5;
+}
+
+.detailContentIn > div {
+  max-width: 850px;
+  word-break: break-all;
+  margin: 20px 10px 0 30px;
+  font-size: 20px;
+}
+
+.commentHr {
+  margin: 50px 0;
+}
+
+.commentInputBtn {
+  max-width: 900px;
+  display: flex;
+  margin: 0 auto;
+  gap: 10px;
+}
+
+.commentInputBtn > input {
+  width: 85%;
+  height: 8vh;
+  border: 2px solid #8997c5;
+  border-radius: 10px;
+  padding: 30px;
+}
+
+.commentInputBtn > button {
+  width: 15%;
+  background-color: #8997c5;
+  align-items: center;
+}
+
+.commentView {
+  max-width: 900px;
+  height: 50px;
+  margin: 20px auto 0;
+  border: 1px solid black;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.commentView > button {
+  width: 10%;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #8997c5;
+}
+
+.detailCategory {
+  width: 90%;
+  margin: 10px 0 20px 50px;
+  font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.detalTitle {
+  width: 80%;
+  margin: 0 0 30px 50px;
+  font-size: 30px;
+}
+
+.nicknameBox {
+  width: 12%;
+  margin-left: 30px;
+}
+
+.commentBox {
+  width: 80%;
+}
+
+.changeCom {
+  width: 10%;
+}
+
+.inputComment {
+  width: 70%;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid #8997c5;
+}
+
+.mainIcon {
+  margin-right: 10px;
+}
+
+.likeBox {
+  width: 100%;
+  display: flex;
+}
+
+.likeBox > button {
+  width: 5%;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border: 1px solid white;
+}
+
+.likeCountNum {
+  width: 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+}

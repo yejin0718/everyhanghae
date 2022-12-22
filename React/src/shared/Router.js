@@ -1,19 +1,32 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Layout from "./layout/Layout";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
 import Main from "../pages/Main";
-import Layout from "../components/layout/Layout";
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
+import Write from "../pages/Write";
+import Detail from "../pages/Detail";
+import Update from "../pages/Update";
+// import Oauth2RedirectHandeler from "../components/login/outh/Oauth2RedirectHandeler";
 
 const Router = () => {
   return (
     <BrowserRouter>
-      <Layout>
-        <Header />
-        <Routes>
+      <Routes>
+        <Route>
+          <Route path="/login" element={<Login />} />
+          {/* <Route
+            path="/api/users/kakao/callback"
+            element={<Oauth2RedirectHandeler />}
+          /> */}
+          <Route path="/register" element={<Register />} />
+        </Route>
+        <Route element={<Layout />}>
           <Route path="/" element={<Main />} />
-        </Routes>
-        <Footer />
-      </Layout>
+          <Route path="/write" element={<Write />} />
+          <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/detail/:id/update" element={<Update />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 };
