@@ -7,6 +7,11 @@ import githup from "../../../img/icon_github.png";
 import Card from "../../elements/Card";
 import classes from "./SignIn.module.css";
 
+export const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+export const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
+const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}
+&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
 const SignIn = () => {
   const navigate = useNavigate();
   const [loginValue, setLoginValue] = useState({
@@ -16,6 +21,11 @@ const SignIn = () => {
     isValidEmail: true,
     isValidPW: true,
   });
+
+  //카카오 인가 코드 요청
+  const onClickKakaoHandler = async (e) => {
+    window.location.href = KAKAO_AUTH_URL;
+  };
 
   const onChangeInputHandler = (event) => {
     const { name, value } = event.target;
@@ -59,7 +69,6 @@ const SignIn = () => {
     <Card className={classes.wrap}>
       <section className={classes.container}>
         <h1>에브리항해</h1>
-
         <form onSubmit={onSubmitLoginValueHandler}>
           <div className={classes.inputArea}>
             <label
@@ -95,25 +104,22 @@ const SignIn = () => {
               onChange={onChangeInputHandler}
             />
           </div>
-
           <div className={classes.btnLogin}>
             <button>로그인</button>
           </div>
-
-          <div className={classes.snsLogin}>
+          {/* <div className={classes.snsLogin}>
             <p>SNS 간편 로그인</p>
             <button type="button">
               <img src={google} className={classes.google} />
             </button>
-            <button type="button">
+            <button type="button" onClick={onClickKakaoHandler}>
               <img src={kakao} className={classes.kakao} />
             </button>
             <button type="button">
               <img src={githup} className={classes.githup} />
             </button>
-          </div>
+          </div> */}
         </form>
-
         <div type="button" className={classes.caption}>
           <Link className={classes.link} to="/register">
             아직 회원이 아니신가요?
